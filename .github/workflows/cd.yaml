@@ -1,0 +1,14 @@
+name: cd
+on:
+  push:
+    branches: [master]
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+
+    steps:
+    echo: 'cd pipeline is running'
