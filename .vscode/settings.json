@@ -1,0 +1,10 @@
+{
+	"emeraldwalk.runonsave": {
+		"commands": [
+			{
+				"isAsync": true,
+				"cmd": "npm run dev"
+			}
+		]
+	}
+}
