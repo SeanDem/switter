@@ -1,7 +1,8 @@
 // Import required Firebase modules
 import { initializeApp } from 'firebase/app';
-import { connectAuthEmulator } from 'firebase/auth';
+import { getAuth, connectAuthEmulator } from 'firebase/auth';
 import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
+import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
 
 // Firebase configuration
 const firebaseConfig = {
@@ -25,7 +26,7 @@ const auth = getAuth(app);
 // If running on localhost, connect to the Firestore emulator
 if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
 	connectFirestoreEmulator(db, 'localhost', 8080);
-	connectAuthEmulator(app.auth(), 'http://localhost:9099');
+	connectAuthEmulator(getAuth(app), 'http://localhost:9099');
 	connectFunctionsEmulator(functions, 'localhost', 5001); // Default port for functions emulator is 5001
 }
 
