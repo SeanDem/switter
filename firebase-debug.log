@@ -1,0 +1,219 @@
+[debug] [2023-08-23T01:07:46.234Z] ----------------------------------------------------------------------
+[debug] [2023-08-23T01:07:46.236Z] Command:       /Users/sean/.nvm/versions/node/v20.3.1/bin/node /Users/sean/.nvm/versions/node/v20.3.1/bin/firebase emulators:start
+[debug] [2023-08-23T01:07:46.236Z] CLI Version:   12.4.8
+[debug] [2023-08-23T01:07:46.236Z] Platform:      darwin
+[debug] [2023-08-23T01:07:46.237Z] Node Version:  v20.3.1
+[debug] [2023-08-23T01:07:46.237Z] Time:          Tue Aug 22 2023 21:07:46 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-08-23T01:07:46.237Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-23T01:07:46.291Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-23T01:07:46.291Z] > authorizing via signed-in user (seandemeritt13@gmail.com)
+[debug] [2023-08-23T01:07:46.466Z] openjdk version "17.0.8" 2023-07-18
+
+[debug] [2023-08-23T01:07:46.467Z] OpenJDK Runtime Environment Homebrew (build 17.0.8+0)
+
+[debug] [2023-08-23T01:07:46.467Z] OpenJDK 64-Bit Server VM Homebrew (build 17.0.8+0, mixed mode, sharing)
+
+[debug] [2023-08-23T01:07:46.476Z] Parsed Java major version: 17
+[info] i  emulators: Starting emulators: auth, functions, firestore, hosting, storage {"metadata":{"emulator":{"name":"hub"},"message":"Starting emulators: auth, functions, firestore, hosting, storage"}}
+[debug] [2023-08-23T01:07:46.836Z] [logging] Logging Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-08-23T01:07:46.837Z] [auth] Authentication Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-08-23T01:07:46.837Z] [firestore] Firestore Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-08-23T01:07:46.837Z] [firestore.websocket] websocket server for firestore only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-08-23T01:07:46.837Z] [storage] Storage Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[warn] ⚠  hosting: Hosting Emulator unable to start on port 5000, starting on 5002 instead. {"metadata":{"emulator":{"name":"hosting"},"message":"Hosting Emulator unable to start on port 5000, starting on 5002 instead."}}
+[debug] [2023-08-23T01:07:46.837Z] [hosting] Hosting Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-08-23T01:07:46.837Z] assigned listening specs for emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5002}]},"metadata":{"message":"assigned listening specs for emulators"}}
+[warn] ⚠  emulators: It seems that you are running multiple instances of the emulator suite for project switter-c8c87. This may result in unexpected behavior. 
+[debug] [2023-08-23T01:07:46.842Z] [hub] writing locator at /var/folders/cm/msn216vs3nlbtgljwhqmkm9h0000gn/T/hub-switter-c8c87.json
+[debug] [2023-08-23T01:07:46.932Z] [functions] Functions Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-08-23T01:07:46.932Z] [eventarc] Eventarc Emulator only supports listening on one address (127.0.0.1). Not listening on ::1
+[debug] [2023-08-23T01:07:46.932Z] late-assigned ports for functions and eventarc emulators {"user":{"hub":[{"address":"127.0.0.1","family":"IPv4","port":4400},{"address":"::1","family":"IPv6","port":4400}],"ui":[{"address":"127.0.0.1","family":"IPv4","port":4000},{"address":"::1","family":"IPv6","port":4000}],"logging":[{"address":"127.0.0.1","family":"IPv4","port":4500}],"auth":[{"address":"127.0.0.1","family":"IPv4","port":9099}],"firestore":[{"address":"127.0.0.1","family":"IPv4","port":8080}],"firestore.websocket":[{"address":"127.0.0.1","family":"IPv4","port":9150}],"storage":[{"address":"127.0.0.1","family":"IPv4","port":9199}],"hosting":[{"address":"127.0.0.1","family":"IPv4","port":5002}],"functions":[{"address":"127.0.0.1","family":"IPv4","port":5001}],"eventarc":[{"address":"127.0.0.1","family":"IPv4","port":9299}]},"metadata":{"message":"late-assigned ports for functions and eventarc emulators"}}
+[warn] ⚠  functions: The following emulators are not running, calls to these services from the Functions emulator will affect production: database, pubsub {"metadata":{"emulator":{"name":"functions"},"message":"The following emulators are not running, calls to these services from the Functions emulator will affect production: \u001b[1mdatabase, pubsub\u001b[22m"}}
+[debug] [2023-08-23T01:07:46.934Z] defaultcredentials: writing to file /Users/sean/.config/firebase/seandemeritt13_gmail_com_application_default_credentials.json
+[debug] [2023-08-23T01:07:46.936Z] Setting GAC to /Users/sean/.config/firebase/seandemeritt13_gmail_com_application_default_credentials.json {"metadata":{"emulator":{"name":"functions"},"message":"Setting GAC to /Users/sean/.config/firebase/seandemeritt13_gmail_com_application_default_credentials.json"}}
+[debug] [2023-08-23T01:07:46.937Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/switter-c8c87/adminSdkConfig [none]
+[debug] [2023-08-23T01:07:47.233Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/switter-c8c87/adminSdkConfig 200
+[debug] [2023-08-23T01:07:47.233Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/switter-c8c87/adminSdkConfig {"projectId":"switter-c8c87","storageBucket":"switter-c8c87.appspot.com","locationId":"us-central"}
+[warn] ⚠  firestore: Cloud Firestore Emulator does not support multiple databases yet. {"metadata":{"emulator":{"name":"firestore"},"message":"Cloud Firestore Emulator does not support multiple databases yet."}}
+[warn] ⚠  firestore: Did not find a Cloud Firestore rules file specified in a firebase.json config file. {"metadata":{"emulator":{"name":"firestore"},"message":"Did not find a Cloud Firestore rules file specified in a firebase.json config file."}}
+[warn] ⚠  firestore: The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration. {"metadata":{"emulator":{"name":"firestore"},"message":"The emulator will default to allowing all reads and writes. Learn more about this option: https://firebase.google.com/docs/emulator-suite/install_and_configure#security_rules_configuration."}}
+[debug] [2023-08-23T01:07:47.251Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-08-23T01:07:47.251Z] Ignoring unsupported arg: single_project_mode_error {"metadata":{"emulator":{"name":"firestore"},"message":"Ignoring unsupported arg: single_project_mode_error"}}
+[debug] [2023-08-23T01:07:47.251Z] Starting Firestore Emulator with command {"binary":"java","args":["-Dgoogle.cloud_firestore.debug_log_level=FINE","-Duser.language=en","-jar","/Users/sean/.cache/firebase/emulators/cloud-firestore-emulator-v1.18.1.jar","--host","127.0.0.1","--port",8080,"--websocket_port",9150,"--project_id","switter-c8c87","--single_project_mode",true,"--functions_emulator","127.0.0.1:5001"],"optionalArgs":["port","webchannel_port","host","rules","websocket_port","functions_emulator","seed_from_export","project_id","single_project_mode"],"joinArgs":false} {"metadata":{"emulator":{"name":"firestore"},"message":"Starting Firestore Emulator with command {\"binary\":\"java\",\"args\":[\"-Dgoogle.cloud_firestore.debug_log_level=FINE\",\"-Duser.language=en\",\"-jar\",\"/Users/sean/.cache/firebase/emulators/cloud-firestore-emulator-v1.18.1.jar\",\"--host\",\"127.0.0.1\",\"--port\",8080,\"--websocket_port\",9150,\"--project_id\",\"switter-c8c87\",\"--single_project_mode\",true,\"--functions_emulator\",\"127.0.0.1:5001\"],\"optionalArgs\":[\"port\",\"webchannel_port\",\"host\",\"rules\",\"websocket_port\",\"functions_emulator\",\"seed_from_export\",\"project_id\",\"single_project_mode\"],\"joinArgs\":false}"}}
+[info] i  firestore: Firestore Emulator logging to firestore-debug.log {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator logging to \u001b[1mfirestore-debug.log\u001b[22m"}}
+[debug] [2023-08-23T01:07:48.693Z] Aug 22, 2023 9:07:48 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start
+INFO: Started WebSocket server on ws://127.0.0.1:9150
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:07:48 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketServer start\nINFO: Started WebSocket server on ws://127.0.0.1:9150\n"}}
+[debug] [2023-08-23T01:07:48.712Z] API endpoint: http:// {"metadata":{"emulator":{"name":"firestore"},"message":"API endpoint: http://"}}
+[debug] [2023-08-23T01:07:48.712Z] 127.0.0.1:8080
+If you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:
+
+   export FIRESTORE_EMULATOR_HOST=127.0.0.1:8080
+
+Dev App Server is now running.
+
+ {"metadata":{"emulator":{"name":"firestore"},"message":"127.0.0.1:8080\nIf you are using a library that supports the FIRESTORE_EMULATOR_HOST environment variable, run:\n\n   export FIRESTORE_EMULATOR_HOST=127.0.0.1:8080\n\nDev App Server is now running.\n\n"}}
+[info] ✔  firestore: Firestore Emulator UI websocket is running on 9150. {"metadata":{"emulator":{"name":"firestore"},"message":"Firestore Emulator UI websocket is running on 9150."}}
+[debug] [2023-08-23T01:07:51.328Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"storage"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-08-23T01:07:52.506Z] Temp file directory for storage emulator: /var/folders/cm/msn216vs3nlbtgljwhqmkm9h0000gn/T/firebase/storage/blobs {"metadata":{"emulator":{"name":"storage"},"message":"Temp file directory for storage emulator: /var/folders/cm/msn216vs3nlbtgljwhqmkm9h0000gn/T/firebase/storage/blobs"}}
+[debug] [2023-08-23T01:07:52.509Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/switter-c8c87/sites 
+[debug] [2023-08-23T01:07:53.099Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/switter-c8c87/sites 200
+[debug] [2023-08-23T01:07:53.099Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/switter-c8c87/sites {"sites":[{"name":"projects/switter-c8c87/sites/switter-c8c87","defaultUrl":"https://switter-c8c87.web.app","appId":"1:865202535032:web:5cb519334a835bff940b8d","type":"DEFAULT_SITE"}]}
+[debug] [2023-08-23T01:07:53.100Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/switter-c8c87/webApps/1:865202535032:web:5cb519334a835bff940b8d/config [none]
+[debug] [2023-08-23T01:07:53.632Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/switter-c8c87/webApps/1:865202535032:web:5cb519334a835bff940b8d/config 200
+[debug] [2023-08-23T01:07:53.632Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/switter-c8c87/webApps/1:865202535032:web:5cb519334a835bff940b8d/config {"projectId":"switter-c8c87","appId":"1:865202535032:web:5cb519334a835bff940b8d","storageBucket":"switter-c8c87.appspot.com","locationId":"us-central","apiKey":"AIzaSyDyxYCVc7Q9iS0f7udYiscLrGbcjxA4ccg","authDomain":"switter-c8c87.firebaseapp.com","messagingSenderId":"865202535032","measurementId":"G-W3D2KDNHQ3"}
+[debug] [2023-08-23T01:07:53.644Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/switter-c8c87 [none]
+[debug] [2023-08-23T01:07:53.853Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/switter-c8c87 200
+[debug] [2023-08-23T01:07:53.854Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/switter-c8c87 {"projectId":"switter-c8c87","projectNumber":"865202535032","displayName":"switter","name":"projects/switter-c8c87","resources":{"hostingSite":"switter-c8c87","storageBucket":"switter-c8c87.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_af6ab0bc-add2-4e3e-9296-9f62072bf543"}
+[info] i  hosting[switter-c8c87]: Serving hosting files from: build {"metadata":{"emulator":{"name":"hosting"},"message":"Serving hosting files from: \u001b[1mbuild\u001b[22m"}}
+[info] ✔  hosting[switter-c8c87]: Local server: http://127.0.0.1:5002 {"metadata":{"emulator":{"name":"hosting"},"message":"Local server: \u001b[4m\u001b[1mhttp://127.0.0.1:5002\u001b[22m\u001b[24m"}}
+[debug] [2023-08-23T01:07:53.920Z] Ignoring unsupported arg: auto_download {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: auto_download"}}
+[debug] [2023-08-23T01:07:53.920Z] Ignoring unsupported arg: port {"metadata":{"emulator":{"name":"ui"},"message":"Ignoring unsupported arg: port"}}
+[debug] [2023-08-23T01:07:53.920Z] Starting Emulator UI with command {"binary":"node","args":["/Users/sean/.cache/firebase/emulators/ui-v1.11.7/server/server.js"],"optionalArgs":[],"joinArgs":false} {"metadata":{"emulator":{"name":"ui"},"message":"Starting Emulator UI with command {\"binary\":\"node\",\"args\":[\"/Users/sean/.cache/firebase/emulators/ui-v1.11.7/server/server.js\"],\"optionalArgs\":[],\"joinArgs\":false}"}}
+[info] i  ui: Emulator UI logging to ui-debug.log {"metadata":{"emulator":{"name":"ui"},"message":"Emulator UI logging to \u001b[1mui-debug.log\u001b[22m"}}
+[debug] [2023-08-23T01:07:53.982Z] Web / API server started at 127.0.0.1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at 127.0.0.1:4000\n"}}
+[debug] [2023-08-23T01:07:53.982Z] Web / API server started at ::1:4000
+ {"metadata":{"emulator":{"name":"ui"},"message":"Web / API server started at ::1:4000\n"}}
+[info] i  functions: Watching "/Users/sean/wesbites/switter/functions" for Cloud Functions... {"metadata":{"emulator":{"name":"functions"},"message":"Watching \"/Users/sean/wesbites/switter/functions\" for Cloud Functions..."}}
+[debug] [2023-08-23T01:07:54.177Z] Validating nodejs source
+[debug] [2023-08-23T01:07:54.653Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "lint": "eslint --ext .js,.ts .",
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^11.8.0",
+    "firebase-functions": "^4.3.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "^8.9.0",
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-import": "^2.25.4",
+    "firebase-functions-test": "^3.1.0",
+    "typescript": "^4.9.0"
+  },
+  "private": true
+}
+[error] ⬢  functions: Failed to load function definition from source: FirebaseError: There was an error reading functions/package.json:
+
+ functions/lib/index.js does not exist, can't deploy Cloud Functions {"metadata":{"emulator":{"name":"functions"},"message":"Failed to load function definition from source: FirebaseError: There was an error reading functions/package.json:\n\n functions/lib/index.js does not exist, can't deploy Cloud Functions"}}
+[info] 
+┌─────────────────────────────────────────────────────────────┐
+│ ✔  All emulators ready! It is now safe to connect your app. │
+│ i  View Emulator UI at http://127.0.0.1:4000/               │
+└─────────────────────────────────────────────────────────────┘
+
+┌────────────────┬────────────────┬─────────────────────────────────┐
+│ Emulator       │ Host:Port      │ View in Emulator UI             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Authentication │ 127.0.0.1:9099 │ http://127.0.0.1:4000/auth      │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Functions      │ 127.0.0.1:5001 │ http://127.0.0.1:4000/functions │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Firestore      │ 127.0.0.1:8080 │ http://127.0.0.1:4000/firestore │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Hosting        │ 127.0.0.1:5002 │ n/a                             │
+├────────────────┼────────────────┼─────────────────────────────────┤
+│ Storage        │ 127.0.0.1:9199 │ http://127.0.0.1:4000/storage   │
+└────────────────┴────────────────┴─────────────────────────────────┘
+  Emulator Hub running at 127.0.0.1:4400
+  Other reserved ports: 4500, 9150
+
+Issues? Report them at https://github.com/firebase/firebase-tools/issues and attach the *-debug.log files.
+ 
+[debug] [2023-08-23T01:07:54.691Z] Aug 22, 2023 9:07:54 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:07:54 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel\nINFO: Connected to new websocket client\n"}}
+[debug] [2023-08-23T01:14:14.935Z] Aug 22, 2023 9:14:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:14 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:15.343Z] Aug 22, 2023 9:14:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:15 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:16.385Z] Aug 22, 2023 9:14:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:16.415Z] Aug 22, 2023 9:14:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:16 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:25.143Z] Aug 22, 2023 9:14:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:25.207Z] Aug 22, 2023 9:14:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:25.226Z] Aug 22, 2023 9:14:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:25 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:29.161Z] Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:29.206Z] Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:29.221Z] Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:29.454Z] Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:29.493Z] Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:29 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:35.059Z] Aug 22, 2023 9:14:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:35.125Z] Aug 22, 2023 9:14:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:35.164Z] Aug 22, 2023 9:14:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:35 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:39.621Z] Aug 22, 2023 9:14:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:39.673Z] Aug 22, 2023 9:14:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:39.683Z] Aug 22, 2023 9:14:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:39 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:40.441Z] Aug 22, 2023 9:14:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:40.493Z] Aug 22, 2023 9:14:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:40.508Z] Aug 22, 2023 9:14:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead
+INFO: Detected non-HTTP/2 connection.
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:40 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channelRead\nINFO: Detected non-HTTP/2 connection.\n"}}
+[debug] [2023-08-23T01:14:41.877Z] Aug 22, 2023 9:14:41 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:41 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel\nINFO: Connected to new websocket client\n"}}
+[debug] [2023-08-23T01:14:42.535Z] Aug 22, 2023 9:14:42 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed
+INFO: Websocket client disconnected
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:42 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed\nINFO: Websocket client disconnected\n"}}
+[debug] [2023-08-23T01:14:43.034Z] Aug 22, 2023 9:14:43 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed
+INFO: Websocket client disconnected
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:43 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed\nINFO: Websocket client disconnected\n"}}
+[debug] [2023-08-23T01:14:43.060Z] Aug 22, 2023 9:14:43 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel
+INFO: Connected to new websocket client
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:43 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler initChannel\nINFO: Connected to new websocket client\n"}}
+[debug] [2023-08-23T01:14:44.304Z] Aug 22, 2023 9:14:44 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed
+INFO: Websocket client disconnected
+ {"metadata":{"emulator":{"name":"firestore"},"message":"Aug 22, 2023 9:14:44 PM com.google.cloud.datastore.emulator.firestore.websocket.WebSocketChannelHandler channelClosed\nINFO: Websocket client disconnected\n"}}
