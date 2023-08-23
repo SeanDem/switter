@@ -1,19 +1,28 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+import * as admin from 'firebase-admin';
+import express from 'express';
+import cors from 'cors';
+admin.initializeApp();
+const app = express();
 
-import {onRequest} from "firebase-functions/v2/https";
-import * as logger from "firebase-functions/logger";
+// Automatically allow cross-origin requests
+app.use(cors({ origin: true }));
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+app.get('/userEmail', async (req: any, res: any) => {
+	const userToken = req.headers.authorization?.split('Bearer ')[1];
 
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+	if (!userToken) {
+		return res.status(401).send('Unauthorized');
+	}
+
+	try {
+		const decodedToken = await admin.auth().verifyIdToken(userToken);
+		const uid = decodedToken.uid;
+
+		const userRecord = await admin.auth().getUser(uid);
+
+		return res.json({ email: userRecord.email });
+	} catch (error) {
+		console.error('Error verifying token:', error);
+		return res.status(500).send('Internal Server Error');
+	}
+});

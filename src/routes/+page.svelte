@@ -1,46 +1,45 @@
 <script lang="ts">
-	import { db } from '$lib/firebase';
-	import { collection, addDoc, getDocs } from 'firebase/firestore';
-	import { onMount } from 'svelte';
+	import { app } from '$lib/firebase';
+	import {
+		GoogleAuthProvider,
+		signInWithPopup,
+		createUserWithEmailAndPassword,
+		onAuthStateChanged,
+		getAuth
+	} from 'firebase/auth';
 
-	type Record = {
-		id: string;
-		name: string;
-	};
+	let email: string = '';
+	let password: string = '';
 
-	let records: Record[] = [];
-	let newRecordName: string = '';
+	const auth = getAuth(app);
 
-	async function addRecord(): Promise<void> {
-		const docRef = await addDoc(collection(db, 'records'), {
-			name: newRecordName
-		});
-		console.log('Record added with ID: ', docRef.id);
-		fetchRecords();
+	function signUpWithGoogle(): void {
+		const provider = new GoogleAuthProvider();
+		signInWithPopup(auth, provider);
 	}
 
-	async function fetchRecords(): Promise<void> {
-		const querySnapshot = await getDocs(collection(db, 'records'));
-		records = querySnapshot.docs.map((doc) => {
-			return { id: doc.id, name: doc.data().name }; // Assuming "name" field exists
-		});
+	function signUpWithEmail(): void {
+		createUserWithEmailAndPassword(auth, email, password);
 	}
 
-	// Fetch records on component mount
-	onMount(fetchRecords);
+	onAuthStateChanged(auth, (user) => {
+		if (user) {
+			console.log('User signed up:', user);
+		}
+	});
 </script>
 
-<h1>Welcome to SvelteKit</h1>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<h2>Sign Up</h2>
+<button on:click={signUpWithGoogle}>
+	<img
+		src="https://developers.google.com/identity/images/g-logo.png"
+		alt="Google Logo"
+		style="height: 20px; vertical-align: middle;"
+	/> Sign up with Google
+</button>
 
-<!-- Input and Button to Add a Record -->
-<input bind:value={newRecordName} placeholder="Enter record name" />
-<button on:click={addRecord}>Add Record</button>
-
-<!-- Display Records -->
-<h2>Records:</h2>
-<ul>
-	{#each records as record (record.id)}
-		<li>{record.name}</li>
-	{/each}
-</ul>
+<div>
+	<input bind:value={email} placeholder="Email" type="email" />
+	<input bind:value={password} placeholder="Password" type="password" />
+	<button on:click={signUpWithEmail}>Sign up with Email</button>
+</div>
