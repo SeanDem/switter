@@ -27,6 +27,9 @@ function subscribe(store, ...callbacks) {
   const unsub = store.subscribe(...callbacks);
   return unsub.unsubscribe ? () => unsub.unsubscribe() : unsub;
 }
+function null_to_empty(value) {
+  return value == null ? "" : value;
+}
 let current_component;
 function set_current_component(component) {
   current_component = component;
@@ -115,6 +118,7 @@ export {
   create_ssr_component as c,
   subscribe as d,
   escape as e,
+  null_to_empty as f,
   getContext as g,
   missing_component as m,
   noop as n,

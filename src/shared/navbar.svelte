@@ -18,13 +18,11 @@
 <style>
 	.sidebar {
 		position: fixed;
-		top: 0;
 		left: 0;
+		top: 0;
 		height: 100vh;
 		width: 220px;
-		background-color: #333;
-		padding: 1rem;
-		box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
+		background-color: white;
 	}
 
 	.sidebar a {
@@ -32,7 +30,7 @@
 		padding: 0.5rem 1rem;
 		margin-bottom: 0.5rem;
 		font-size: 24px;
-		color: white;
+		color: black;
 		text-decoration: none;
 		font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode',
 			Geneva, Verdana, sans-serif;
