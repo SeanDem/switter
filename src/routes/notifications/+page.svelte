@@ -2,6 +2,6 @@
 	import Layout from '../../layout.svelte';
 </script>
 
-<p>placeholder</p>
+<p>notifications</p>
 
 <Layout />

@@ -6,6 +6,7 @@
 		"dev": "vite dev",
 		"build": "vite build",
 		"deploy": "firebase deploy",
+		"emulate": "firebase emulators:start",
 		"preview": "vite preview",
 		"test": "npm run test:integration && npm run test:unit",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
@@ -19,6 +20,7 @@
 		"@playwright/test": "^1.28.1",
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
+		"@types/firebase": "^3.2.1",
 		"@typescript-eslint/eslint-plugin": "^5.45.0",
 		"@typescript-eslint/parser": "^5.45.0",
 		"eslint": "^8.28.0",
@@ -36,8 +38,8 @@
 	"type": "module",
 	"dependencies": {
 		"autoprefixer": "^10.4.15",
-		"daisyui": "^3.6.1",
-		"firebase": "^9.23.0",
+		"daisyui": "^3.6.3",
+		"firebase": "^10.3.1",
 		"tailwindcss": "^3.3.3",
 		"ts-node": "^10.9.1"
 	}

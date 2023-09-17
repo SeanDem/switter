@@ -1,8 +1,6 @@
 import { initializeApp } from 'firebase/app';
-import { getAuth, connectAuthEmulator } from 'firebase/auth';
-import { getFirestore, connectFirestoreEmulator } from 'firebase/firestore';
-import { getFunctions, connectFunctionsEmulator } from 'firebase/functions';
-
+import { getFirestore } from '@firebase/firestore';
+import { getAuth } from 'firebase/auth';
 const firebaseConfig = {
 	apiKey: 'AIzaSyDyxYCVc7Q9iS0f7udYiscLrGbcjxA4ccg',
 	authDomain: 'switter-c8c87.firebaseapp.com',
@@ -13,15 +11,6 @@ const firebaseConfig = {
 	measurementId: 'G-W3D2KDNHQ3'
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const functions = getFunctions(app);
-const auth = getAuth(app);
-
-if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
-	connectFirestoreEmulator(db, 'localhost', 8080);
-	connectAuthEmulator(getAuth(app), 'http://localhost:9099');
-	connectFunctionsEmulator(functions, 'localhost', 5001);
-}
-
-export { db, app };
+export const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
+export const auth = getAuth(app);

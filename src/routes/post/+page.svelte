@@ -2,6 +2,5 @@
 	import Layout from '../../layout.svelte';
 </script>
 
-<p>placeholder</p>
-
+<p>New Post</p>
 <Layout />
