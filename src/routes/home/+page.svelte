@@ -1,17 +1,19 @@
 <script lang="ts">
-	import { getAllSweetInfo } from '$lib/services/sweet';
-	import type { Sweet, SweetInfo } from '$lib/types';
-	import Layout from '../../layout.svelte';
+	import { onMount } from 'svelte';
+	import { getSweetsWithUserInfo } from '$lib/services/sweet/facade';
+	import type { SweetInfo } from '$lib/types';
 	import Tweet from '../../shared/tweet.svelte';
 
-	let sweetUserData: SweetInfo[] = [];
-	getAllSweetInfo().then((data) => {
-		sweetUserData = data;
+	let sweetInfoList: SweetInfo[];
+	onMount(async () => {
+		sweetInfoList = await getSweetsWithUserInfo();
 	});
 </script>
 
-<Layout>
-	{#each sweetUserData as sweetInfo}
+{#if sweetInfoList}
+	{#each sweetInfoList as sweetInfo}
 		<Tweet {sweetInfo} />
 	{/each}
-</Layout>
+{:else}
+	<div>Loading...</div>
+{/if}

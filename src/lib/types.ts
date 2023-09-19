@@ -1,45 +1,50 @@
-import { user } from './store/store';
 import type { Timestamp } from '@firebase/firestore';
-import type { User } from 'firebase/auth';
+import type { UserInfo } from 'firebase/auth';
+import type { FieldValue } from 'firebase/firestore';
 export interface Sweet {
-	id: string;
-	userId: string;
+	id?: string;
 	text: string;
-	timestamp: Timestamp;
-	likesCount: number;
-	retweetsCount: number;
-	commentsCount: number;
+	userUid: string;
+	timestamp?: Timestamp | FieldValue;
+	likesCount?: number;
+	retweetsCount?: number;
+	commentsCount?: number;
 }
 
 export interface SweetInfo {
 	sweet: Sweet;
-	userProfile: UserProfile;
+	userProfile: UserPublic;
 }
 export interface Comment {
 	userId: string;
 	text: string;
 	timestamp: Timestamp;
 }
-
-export interface UserProfile {
-	uid: string;
+export interface Like {
+	userId: string;
+}
+export interface UserPublic {
+	userUid: string;
+	userDisplayName?: string;
+	userProfileUrl?: string;
 	handle: string;
-	birthday: string;
-	phoneNumber: string;
-	bio: string;
-	followersCount: number;
-	followingCount: number;
-	profilePicture: Blob;
+	bio?: string;
+	birthday?: string;
+	followersCount?: number;
+	followingCount?: number;
 }
 
+export interface UserProfile extends UserPublic, UserInfo {}
+
 export interface UserPrivate {
-	uid: string;
-	settings: string;
+	userUid: string;
+	settings?: string;
 }
 
 export interface Conversation {
-	userId1: string;
-	userId2: string;
-	lastMessage: string;
-	lastTimestamp: Timestamp;
+	id: string;
+	userId1?: string;
+	userId2?: string;
+	lastMessage?: string;
+	lastTimestamp?: Timestamp;
 }

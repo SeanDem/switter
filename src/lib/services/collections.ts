@@ -5,7 +5,7 @@ const userPrivateCollection = collection(db, 'userPrivate');
 
 const userProfileCollection = collection(db, 'userProfile');
 
-const tweetsCollection = collection(db, 'tweets');
+const tweetsCollection = collection(db, 'sweets');
 
 const conversationsCollection = collection(db, 'conversations');
 

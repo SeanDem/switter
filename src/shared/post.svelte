@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { addSweet } from "$lib/services/sweet";
+	import { createTweet } from "$lib/services/sweet/sweet";
 
 	let modal: HTMLDialogElement;
 	let text: string;
 	function onSubmit(): void {
-		addSweet(text);
+		createTweet(text);
 	}
 </script>
 
