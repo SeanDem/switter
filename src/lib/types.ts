@@ -1,25 +1,26 @@
+import { handle } from './../hooks';
 import type { Timestamp } from '@firebase/firestore';
 import type { UserInfo } from 'firebase/auth';
 import type { FieldValue } from 'firebase/firestore';
 export interface Sweet {
 	id?: string;
 	text: string;
-	userUid: string;
 	timestamp?: Timestamp | FieldValue;
 	likesCount?: number;
 	retweetsCount?: number;
 	commentsCount?: number;
+	
+	userUid: string;
+	userDisplayName?: string;
+	userProfileUrl?: string;
+	handle?: string;
 }
 
 export interface SweetInfo {
 	sweet: Sweet;
-	userProfile: UserPublic;
+	userPublic: UserPublic;
 }
-export interface Comment {
-	userId: string;
-	text: string;
-	timestamp: Timestamp;
-}
+
 export interface Like {
 	userId: string;
 }

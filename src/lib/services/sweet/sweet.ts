@@ -1,3 +1,5 @@
+import { handle } from './../../../hooks';
+import { userPublic } from './../../store/store';
 import { serverTimestamp } from '@firebase/firestore';
 import {
 	addDoc,
@@ -12,22 +14,24 @@ import {
 import { tweetsCollection } from '../collections';
 import { isUserAuth, handleFirestoreError } from '../utils';
 import type { Sweet } from '$lib/types';
-import { user } from '$lib/store/store';
-import type { User } from 'firebase/auth';
 import { get } from 'svelte/store';
 
 export async function createTweet(text: string): Promise<string> {
-	const currentUser: User | null = get(user);
-	if (!currentUser) throw new Error('User not authenticated');
+	const userPublicData = get(userPublic);
+	if (!userPublicData) throw new Error('User not authenticated');
 
 	const tweet: Sweet = {
 		text,
 		timestamp: serverTimestamp(),
-		userUid: currentUser.uid,
 		likesCount: 0,
 		commentsCount: 0,
-		retweetsCount: 0
+		retweetsCount: 0,
+		userUid: userPublicData.userUid,
+		userDisplayName: userPublicData.userDisplayName,
+		userProfileUrl: userPublicData.userProfileUrl,
+		handle: userPublicData.handle
 	};
+	
 	return handleFirestoreError(async () => {
 		isUserAuth();
 		const docRef = await addDoc(tweetsCollection, tweet);
@@ -39,9 +43,6 @@ export async function getTweet(tweetId: string): Promise<Sweet> {
 	return handleFirestoreError(async () => {
 		const tweetDoc = doc(tweetsCollection, tweetId);
 		const tweetSnapshot = await getDoc(tweetDoc);
-		if (!tweetSnapshot.exists) {
-			throw new Error('Tweet not found');
-		}
 		return {
 			id: tweetSnapshot.id,
 			...tweetSnapshot.data()
@@ -55,7 +56,7 @@ export async function getAllTweets(): Promise<Sweet[]> {
 		const snapshot = await getDocs(q);
 		return snapshot.docs.map((doc) => ({
 			id: doc.id,
-			...(doc.data() as Sweet)
+			...doc.data()
 		}));
 	});
 }

@@ -77,6 +77,6 @@
 	<button on:click={submitProfile}>Submit</button>
 	<br />
 
-	<button on:click={() => signOut(auth)}>Submit</button>
+	<button on:click={() => signOut(auth)}>Logout</button>
 </div>
 

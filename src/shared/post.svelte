@@ -1,14 +1,16 @@
 <script lang="ts">
-	import { createTweet } from "$lib/services/sweet/sweet";
-
+	import { createEventDispatcher } from 'svelte';
+	const dispatch = createEventDispatcher();
+	export let buttonName: string;
 	let modal: HTMLDialogElement;
 	let text: string;
+
 	function onSubmit(): void {
-		createTweet(text);
+		dispatch('submit', { text });
 	}
 </script>
 
-<button on:click={() => modal.showModal()}>Sweet</button>
+<button class="text-center" on:click={() => modal.showModal()}>{buttonName}</button>
 
 <dialog bind:this={modal} class="w-72 md:w-1/2 lg:w-1/3 mx-auto">
 	<form method="dialog">

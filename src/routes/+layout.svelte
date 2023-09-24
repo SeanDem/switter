@@ -1,14 +1,13 @@
 <script lang="ts">
-	import { user } from '$lib/store/store';
+	import { user, userPublic } from '$lib/store/store';
 	import 'firebase/auth';
 	import { getAuth, onAuthStateChanged } from 'firebase/auth';
 	import type { User as FirebaseUser } from 'firebase/auth';
 	import Navbar from '../shared/navbar.svelte';
 	import Login from '../shared/login.svelte';
 	import Profile from '../shared/profile.svelte';
-	import { userPrivateCollection, userProfileCollection } from '$lib/services/collections';
-	import { doc, getDoc } from 'firebase/firestore';
 	import type { UserPublic } from '$lib/types';
+	import { getUserPublic } from '$lib/services/user/profile';
 
 	const auth = getAuth();
 	let userProfileCompleted = false;
@@ -16,16 +15,16 @@
 
 	onAuthStateChanged(auth, async (authUser: FirebaseUser | null) => {
 		user.set(authUser);
-		if (authUser) userProfileCompleted = await checkUserProfile(authUser);
+		if (authUser) {
+			userProfileCompleted = await checkAndSetUserProfile(authUser);
+		}
 		loading = false;
 	});
 
-	async function checkUserProfile(authUser: FirebaseUser): Promise<boolean> {
-		const userDocRef = doc(userProfileCollection, authUser.uid);
-		const userDoc = await getDoc(userDocRef);
-		const data = userDoc.data() as UserPublic;
-		const isProfileCompleted = !!data.handle && !!data.userDisplayName;
-		return isProfileCompleted;
+	async function checkAndSetUserProfile(authUser: FirebaseUser): Promise<boolean> {
+		const res: UserPublic = await getUserPublic(authUser);
+		userPublic.set(res);
+		return !!res.handle && !!res.userDisplayName;
 	}
 </script>
 

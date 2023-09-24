@@ -5,6 +5,7 @@ import { isUserAuth, handleFirestoreError, queryByUID } from '../utils';
 import { user } from '$lib/store/store';
 import { get } from 'svelte/store';
 import { getDoc } from 'firebase/firestore';
+import type { User } from 'firebase/auth';
 
 export async function createOrUpdateUserProfile(userProfile: UserPublic): Promise<void> {
 	return handleFirestoreError(async () => {
@@ -15,9 +16,9 @@ export async function createOrUpdateUserProfile(userProfile: UserPublic): Promis
 	});
 }
 
-export async function getUserProfileByUid(uid: string): Promise<UserPublic | null> {
+export async function getUserProfileByUid(userUid: string): Promise<UserPublic> {
 	return handleFirestoreError(async () => {
-		const userDocRef = doc(userProfileCollection, uid);
+		const userDocRef = doc(userProfileCollection, userUid);
 		const userDoc = await getDoc(userDocRef);
 		return userDoc.data();
 	});
@@ -28,4 +29,9 @@ export async function checkUserProfileExists(userUid: string): Promise<boolean> 
 		const userSnapshot = await getDocs(queryByUID(userProfileCollection, userUid));
 		return !userSnapshot.empty;
 	});
+}
+export async function getUserPublic(authUser: User): Promise<UserPublic> {
+	const userDocRef = doc(userProfileCollection, authUser?.uid);
+	const userDoc = await getDoc(userDocRef);
+	return userDoc.data() as UserPublic;
 }

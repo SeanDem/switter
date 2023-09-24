@@ -1,24 +1,43 @@
-import { addDoc, getDocs, updateDoc, deleteDoc, doc } from 'firebase/firestore';
+import { user, userPublic } from './../../store/store';
+import { addDoc, getDocs, updateDoc, deleteDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { getCommentsSubCollection } from '../collections';
 import { isUserAuth, handleFirestoreError } from '../utils';
+import { get } from 'svelte/store';
+import type { User } from '@firebase/auth';
+import type { Sweet, UserPublic } from '$lib/types';
 
-export async function createComment(tweetId: string, comment: any): Promise<string> {
+export async function createComment(tweetId: string, comment: string): Promise<string> {
 	return handleFirestoreError(async () => {
 		isUserAuth();
 		const commentsCol = getCommentsSubCollection(tweetId);
-		const docRef = await addDoc(commentsCol, comment);
+		const currentUser: UserPublic | null = get(userPublic);
+		if (!currentUser) throw new Error('User not authenticated');
+
+		const commentDoc: Sweet = {
+			text: comment,
+			timestamp: serverTimestamp(),
+			likesCount: 0,
+			commentsCount: 0,
+			retweetsCount: 0,
+			userUid: currentUser.userUid,
+			userDisplayName: currentUser.userDisplayName,
+			userProfileUrl: currentUser.userProfileUrl,
+			handle: currentUser.handle
+		};
+
+		const docRef = await addDoc(commentsCol, commentDoc);
 		return docRef.id;
 	});
 }
 
-export async function getComments(tweetId: string): Promise<Comment[]> {
+export async function getComments(tweetId: string): Promise<Sweet[]> {
 	return handleFirestoreError(async () => {
 		const commentsCol = getCommentsSubCollection(tweetId);
 		const snapshot = await getDocs(commentsCol);
-		if (snapshot.empty) {
-			return [];
-		}
-		return snapshot.docs.map((doc) => doc.data()) as Comment[];
+		if (snapshot.empty) return [];
+		console.log('snapshot.docs', snapshot.docs);
+		console.log(snapshot.docs.map((doc) => doc.data()));
+		return snapshot.docs.map((doc) => doc.data()) as Sweet[];
 	});
 }
 
