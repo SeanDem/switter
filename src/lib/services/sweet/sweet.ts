@@ -31,7 +31,7 @@ export async function createTweet(text: string): Promise<string> {
 		userProfileUrl: userPublicData.userProfileUrl,
 		handle: userPublicData.handle
 	};
-	
+
 	return handleFirestoreError(async () => {
 		isUserAuth();
 		const docRef = await addDoc(tweetsCollection, tweet);
@@ -39,7 +39,7 @@ export async function createTweet(text: string): Promise<string> {
 	});
 }
 
-export async function getTweet(tweetId: string): Promise<Sweet> {
+export async function getSweet(tweetId: string): Promise<Sweet> {
 	return handleFirestoreError(async () => {
 		const tweetDoc = doc(tweetsCollection, tweetId);
 		const tweetSnapshot = await getDoc(tweetDoc);

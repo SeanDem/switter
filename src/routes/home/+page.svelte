@@ -1,20 +1,19 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { getSweetsWithUserInfo } from '$lib/services/sweet/facade';
-	import type { SweetInfo } from '$lib/types';
+	import type { Sweet } from '$lib/types';
 	import Tweet from '../../shared/tweet.svelte';
-	import { goto } from '$app/navigation';
+	import { getAllTweets } from '$lib/services/sweet/sweet';
 
-	let sweetInfoList: SweetInfo[];
+	let sweets: Sweet[];
 	onMount(async () => {
-		sweetInfoList = await getSweetsWithUserInfo();
+		sweets = await getAllTweets();
 	});
 </script>
 
-{#if sweetInfoList}
-	{#each sweetInfoList as sweetInfo (sweetInfo.sweet.id)}
+{#if sweets}
+	{#each sweets as sweet (sweet.id)}
 		<div />
-		<Tweet {sweetInfo} />
+		<Tweet {sweet} />
 	{/each}
 {:else}
 	<div>Loading...</div>

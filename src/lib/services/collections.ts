@@ -9,19 +9,15 @@ const tweetsCollection = collection(db, 'sweets');
 
 const conversationsCollection = collection(db, 'conversations');
 
-const getCommentsSubCollection = (tweetId: string) => {
-	return collection(doc(tweetsCollection, tweetId), 'comments');
-};
+const likesCollection = collection(db, 'likes');
 
-const getLikesSubCollection = (tweetId: string) => {
-	return collection(doc(tweetsCollection, tweetId), 'likes');
-};
+const commentsCollection = collection(db, 'comments');
 
 export {
 	tweetsCollection,
 	conversationsCollection,
 	userPrivateCollection,
 	userProfileCollection,
-	getCommentsSubCollection,
-	getLikesSubCollection
+	likesCollection,
+	commentsCollection
 };

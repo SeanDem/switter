@@ -10,7 +10,7 @@
 	}
 </script>
 
-<button class="text-center" on:click={() => modal.showModal()}>{buttonName}</button>
+<button on:click={() => modal.showModal()}>{buttonName}</button>
 
 <dialog bind:this={modal} class="w-72 md:w-1/2 lg:w-1/3 mx-auto">
 	<form method="dialog">

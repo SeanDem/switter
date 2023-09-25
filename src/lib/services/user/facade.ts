@@ -12,7 +12,6 @@ export async function fetchCurrentUserProfileData(): Promise<UserProfile | null>
 	if (currentUser && currentUser.uid) {
 		const userProfile = await getUserProfileByUid(currentUser.uid);
 		if (userProfile) {
-			console.log('userProfile', userProfile);
 			return {
 				...userProfile,
 				displayName: currentUser.displayName,

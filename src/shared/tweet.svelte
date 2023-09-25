@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { formatDateSmall } from '$lib/utils/data';
-	import type { SweetInfo } from '$lib/types';
+	import type { Sweet } from '$lib/types';
 	import ActionBar from './action-bar.svelte';
 	import { goto } from '$app/navigation';
 
-	export let sweetInfo: SweetInfo;
+	export let sweet: Sweet;
 
 	const onTweetClicked = (): void => {
-		goto(`tweet/${sweetInfo.sweet.id}`);
+		goto(`tweet/${sweet.id}`);
 	};
 </script>
 
@@ -20,12 +20,12 @@
 		on:click={() => onTweetClicked()}
 	>
 		<div class="flex items-center mb-2">
-			<span class="font-bold text-theme-text">{sweetInfo.userPublic.userDisplayName}</span>
-			<span class="text-theme-secondary ml-2">@{sweetInfo.userPublic.handle}</span>
-			<span class="text-gray-500 ml-2">{formatDateSmall(sweetInfo.sweet.timestamp)}</span>
+			<span class="font-bold text-theme-text">{sweet.userDisplayName}</span>
+			<span class="text-theme-secondary ml-2">@{sweet.handle}</span>
+			<span class="text-gray-500 ml-2">{formatDateSmall(sweet.timestamp)}</span>
 		</div>
-		<p class="text-theme-text">{sweetInfo.sweet.text}</p>
+		<p class="text-theme-text">{sweet.text}</p>
 	</div>
 
-	<ActionBar {sweetInfo} />
+	<ActionBar {sweet} />
 </div>

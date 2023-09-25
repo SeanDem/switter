@@ -1,7 +1,7 @@
 import { userPublic } from './../../store/store';
 import type { SweetInfo, UserPublic } from '$lib/types';
 import { getUserProfileByUid } from '../user/profile';
-import { getAllTweets, getTweet } from './sweet';
+import { getAllTweets, getSweet } from './sweet';
 
 export async function getSweetsWithUserInfo(): Promise<SweetInfo[]> {
 	const sweets = await getAllTweets();
@@ -21,7 +21,7 @@ export async function getSweetsWithUserInfo(): Promise<SweetInfo[]> {
 }
 
 export async function getSweetWithUserInfo(uid: string): Promise<SweetInfo> {
-	const sweet = await getTweet(uid);
+	const sweet = await getSweet(uid);
 	const userPublic: UserPublic = await getUserProfileByUid(sweet.userUid);
 	return { sweet, userPublic };
 }
