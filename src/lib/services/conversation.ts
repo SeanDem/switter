@@ -8,14 +8,13 @@ import {
 	query,
 	where,
 	getDocs,
-    Timestamp
+	Timestamp
 } from 'firebase/firestore';
 import { db } from '$lib/firebase';
 import type { Conversation } from '$lib/types';
 
 const conversationsCollection = collection(db, 'conversations');
 
-// Create
 export const createConversation = async (
 	conversation: Omit<Conversation, 'id'>
 ): Promise<string> => {
@@ -23,14 +22,12 @@ export const createConversation = async (
 	return conversationRef.id;
 };
 
-// Read
 export const getConversation = async (conversationId: string): Promise<Conversation | null> => {
 	const conversationRef = doc(conversationsCollection, conversationId);
 	const conversationSnap = await getDoc(conversationRef);
 	return conversationSnap.exists() ? (conversationSnap.data() as Conversation) : null;
 };
 
-// Update
 export const updateLastMessage = async (
 	conversationId: string,
 	lastMessage: string,
@@ -40,13 +37,11 @@ export const updateLastMessage = async (
 	await updateDoc(conversationRef, { lastMessage, lastTimestamp });
 };
 
-// Delete
 export const deleteConversation = async (conversationId: string): Promise<void> => {
 	const conversationRef = doc(conversationsCollection, conversationId);
 	await deleteDoc(conversationRef);
 };
 
-// Fetch all conversations involving a specific user
 export const getConversationsForUser = async (userId: string): Promise<Conversation[]> => {
 	const q1 = query(conversationsCollection, where('userId1', '==', userId));
 	const q2 = query(conversationsCollection, where('userId2', '==', userId));

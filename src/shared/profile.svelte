@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { user } from '$lib/store/store';
+	import { userAuth } from '$lib/store/store';
 	import { fetchCurrentUserProfileData, updateUserProfile } from '$lib/services/user/facade';
-	import type { UserProfile } from '$lib/types';
+	import type { UserProfileAndInfo } from '$lib/types';
 	import { signOut } from 'firebase/auth';
 	import { auth } from '$lib/firebase';
 
-	let userProfile: Partial<UserProfile> = {};
+	let userProfile: Partial<UserProfileAndInfo> = {};
 
 	onMount(async () => {
 		const userData = await fetchCurrentUserProfileData();
@@ -17,18 +17,18 @@
 	};
 
 	const submitProfile = () => {
-		if (!$user) return;
+		if (!$userAuth) return;
 		if (!userProfile.displayName || !userProfile.handle) {
 			alert('Name and handle are required.');
 			return;
 		}
 		duplicateFields();
-		updateUserProfile(userProfile as UserProfile);
+		updateUserProfile(userProfile as UserProfileAndInfo);
 	};
 	const duplicateFields = () => {
 		userProfile.userDisplayName = userProfile.displayName ?? '';
 		userProfile.userProfileUrl = userProfile.handle;
-		userProfile.userUid = userProfile.bio;
+		userProfile.userUid = userProfile.userUid;
 	};
 </script>
 
@@ -74,9 +74,8 @@
 	</label>
 	<br />
 
-	<button on:click={submitProfile}>Submit</button>
+	<button on:click={submitProfile}>Save</button>
 	<br />
 
 	<button on:click={() => signOut(auth)}>Logout</button>
 </div>
-

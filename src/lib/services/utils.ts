@@ -11,6 +11,23 @@ export function handleFirestoreError(callback: () => Promise<any>): Promise<any>
 	}
 }
 
+export function HandleFirestoreError(
+	target: Object,
+	propertyKey: string,
+	descriptor: PropertyDescriptor
+) {
+	const originalMethod = descriptor.value;
+	descriptor.value = async function (...args: any[]) {
+		try {
+			return await originalMethod.apply(this, args);
+		} catch (error) {
+			console.error('Firestore Error:', error);
+			throw error;
+		}
+	};
+	return descriptor;
+}
+
 export function isUserAuth() {
 	if (!auth.currentUser) {
 		throw new Error('User not authenticated');

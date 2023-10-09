@@ -1,20 +1,32 @@
 <script lang="ts">
-	import { createComment } from '$lib/services/sweet/comment';
-	import { incrementLikes } from '$lib/services/sweet/like';
-	import type { Sweet, SweetInfo } from '$lib/types';
+	import { incrementSweetProperty } from '$lib/services/sweet/increment-decrement';
+	import { createSweet, createTweet } from '$lib/services/sweet/sweet';
+	import { SweetType, type Sweet } from '$lib/types';
 	import Post from './post.svelte';
+	import { userProfile } from '$lib/store/store';
+	import { get } from 'svelte/store';
+
 	export let sweet: Sweet;
+	const userProfileData = get(userProfile);
 
 	function onComment(event: CustomEvent<any>) {
-		createComment(sweet.id ?? '', event.detail.text);
+		sweet.commentsCount += 1;
+		createTweet(
+			{ sweetType: SweetType.COMMENT, userUid: userProfileData?.userUid },
+			event.detail.text
+		);
+		incrementSweetProperty(sweet.id ?? '', 'commentsCount');
 	}
 
 	function onReSweet() {
-		console.log('Retweeted!');
+		sweet.retweetsCount += 1;
+		createSweet({ refSweetId: sweet.id, sweetType: SweetType.RE_SWEET }, '');
+		incrementSweetProperty(sweet.id ?? '', 'retweetsCount');
 	}
 
 	function onLike() {
-		incrementLikes(sweet.id ?? '');
+		sweet.likesCount += 1;
+		incrementSweetProperty(sweet.id ?? '', 'likesCount');
 	}
 </script>
 

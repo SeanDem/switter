@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { user, userPublic } from '$lib/store/store';
+	import { userAuth, userProfile } from '$lib/store/store';
 	import 'firebase/auth';
 	import { getAuth, onAuthStateChanged } from 'firebase/auth';
 	import type { User as FirebaseUser } from 'firebase/auth';
 	import Navbar from '../shared/navbar.svelte';
 	import Login from '../shared/login.svelte';
 	import Profile from '../shared/profile.svelte';
-	import type { UserPublic } from '$lib/types';
+	import type { UserProfile } from '$lib/types';
 	import { getUserPublic } from '$lib/services/user/profile';
 
 	const auth = getAuth();
@@ -14,7 +14,7 @@
 	let loading = true;
 
 	onAuthStateChanged(auth, async (authUser: FirebaseUser | null) => {
-		user.set(authUser);
+		userAuth.set(authUser);
 		if (authUser) {
 			userProfileCompleted = await checkAndSetUserProfile(authUser);
 		}
@@ -22,17 +22,17 @@
 	});
 
 	async function checkAndSetUserProfile(authUser: FirebaseUser): Promise<boolean> {
-		const res: UserPublic = await getUserPublic(authUser);
-		userPublic.set(res);
+		const res: UserProfile = await getUserPublic(authUser);
+		userProfile.set(res);
 		return !!res.handle && !!res.userDisplayName;
 	}
 </script>
 
 {#if loading}
 	<p>Loading...</p>
-{:else if !$user}
+{:else if !$userAuth}
 	<Login />
-{:else if $user && !userProfileCompleted}
+{:else if $userAuth && !userProfileCompleted}
 	<Profile />
 {:else}
 	<Navbar />
