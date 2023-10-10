@@ -24,7 +24,7 @@
 	async function checkAndSetUserProfile(authUser: FirebaseUser): Promise<boolean> {
 		const res: UserProfile = await getUserPublic(authUser);
 		userProfile.set(res);
-		return !!res.handle && !!res.userDisplayName;
+		return !!res && !!res.handle && !!res.userDisplayName && !!res.userUid;
 	}
 </script>
 

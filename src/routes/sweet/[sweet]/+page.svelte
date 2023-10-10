@@ -4,7 +4,6 @@
 	import type { SweetDetail } from '$lib/types';
 
 	export let data: SweetDetail;
-	console.log(data);
 </script>
 
 {#if data}

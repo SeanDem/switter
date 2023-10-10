@@ -27,7 +27,7 @@ export async function createTweet(options: SweetOptions, text: string): Promise<
 	if (!userPublicData) throw new Error('User not authenticated');
 	const tweet: Sweet = {
 		text,
-		refSweetId: options.refSweetId,
+		refSweetId: options.refSweetId ?? '',
 		type: options.sweetType,
 		userUid: userPublicData.userUid,
 		timestamp: serverTimestamp(),
@@ -100,7 +100,6 @@ export async function deleteTweetById(tweetId: string): Promise<void> {
 export async function getAllSweetDetail(options: SweetOptions): Promise<SweetDetail[]> {
 	return handleFirestoreError(async () => {
 		const sweets = await getSweetList(options);
-
 		const userUids = [...new Set(sweets.map((sweet) => sweet.userUid))];
 		if (userUids.length === 0) return [];
 
@@ -133,18 +132,22 @@ async function fetchUsersByUids(userUids: string[]): Promise<{ [key: string]: Us
 
 export async function getSweetList(options: SweetOptions): Promise<Sweet[]> {
 	return handleFirestoreError(async () => {
+		console.log(options);
 		let q = query(sweetsCollection);
 
 		if (options.sweetType) {
 			q = query(q, where('type', '==', options.sweetType));
+			console.log(options.sweetType);
 		}
 
 		if (options.refSweetId) {
 			q = query(q, where('refSweetId', '==', options.refSweetId));
+			console.log(options.refSweetId);
 		}
 
 		if (options.userUid) {
 			q = query(q, where('userUid', '==', options.userUid));
+			console.log(options.userUid);
 		}
 
 		q = query(q, orderBy('timestamp', 'desc'));

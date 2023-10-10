@@ -39,12 +39,12 @@ async function updateUserPublic(updatedData: UserProfile) {
 	const currentUser = get(userAuth);
 	if (!currentUser) throw new Error('User not authenticated');
 	const userPublic: UserProfile = {
-		userUid: updatedData.userUid,
-		userDisplayName: updatedData.userDisplayName,
-		userProfileUrl: updatedData.userProfileUrl,
+		userUid: currentUser.uid,
+		userDisplayName: updatedData.userDisplayName ?? '',
+		userProfileUrl: updatedData.userProfileUrl ?? '',
 		handle: updatedData.handle,
-		bio: updatedData.bio,
-		birthday: updatedData.birthday,
+		bio: updatedData.bio ?? '',
+		birthday: updatedData.birthday ?? '',
 		followersCount: 0,
 		followingCount: 0
 	};

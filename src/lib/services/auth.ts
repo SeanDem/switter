@@ -9,11 +9,6 @@ import {
 } from 'firebase/auth';
 import type { UserCredential } from 'firebase/auth';
 
-export function getCurrentUserId() {
-	const user = auth.currentUser;
-	return user ? user.uid : null;
-}
-
 export async function signGoogle(): Promise<UserCredential> {
 	const provider = new GoogleAuthProvider();
 	return await signInWithPopup(auth, provider);
