@@ -3,7 +3,7 @@
 	import { createTweet } from '$lib/services/sweet/sweet';
 	import { SweetType } from '$lib/types';
 	import { get } from 'svelte/store';
-	import Post from './post.svelte';
+	import Post from '../lib/components/post.svelte';
 	import { userProfile } from '$lib/store/store';
 	let active = '';
 

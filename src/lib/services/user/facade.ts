@@ -7,27 +7,25 @@ import { isUserAuth } from '../utils';
 import { updateEmail, updateProfile, type UserInfo } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
-export async function fetchCurrentUserProfileData(): Promise<UserProfileAndInfo | null> {
+export async function fetchCurrentUserProfileData(): Promise<UserProfileAndInfo | undefined> {
 	const currentUser = get(userAuth);
 	if (currentUser && currentUser.uid) {
 		const userProfile = await getUserProfileByUid(currentUser.uid);
-		if (userProfile) {
-			return {
-				...userProfile,
-				displayName: currentUser.displayName,
-				birthday: userProfile.birthday,
-				bio: userProfile.bio,
-				handle: userProfile.handle,
-				phoneNumber: currentUser.phoneNumber,
-				photoURL: currentUser.photoURL,
-				providerId: currentUser.providerId,
-				userUid: currentUser.uid,
-				followersCount: userProfile.followersCount,
-				followingCount: userProfile.followingCount
-			} as UserProfileAndInfo;
-		}
+		return {
+			...userProfile,
+			displayName: currentUser.displayName,
+			birthday: userProfile.birthday,
+			bio: userProfile.bio,
+			handle: userProfile.handle,
+			phoneNumber: currentUser.phoneNumber,
+			photoURL: currentUser.photoURL,
+			providerId: currentUser.providerId,
+			userUid: currentUser.uid,
+			followersCount: userProfile.followersCount,
+			followingCount: userProfile.followingCount
+		} as UserProfileAndInfo;
 	}
-	return null;
+	return;
 }
 
 export async function updateUserProfile(updatedData: UserProfileAndInfo): Promise<void> {

@@ -7,6 +7,7 @@
 	import { goto } from '$app/navigation';
 	export let comment: SweetDetail;
 
+	//ideally i would like to remove this. Since, however, it can recuse forever i think we need load in the component
 	onMount(() => {
 		getSweetDetail(comment.sweet.id ?? '').then((data) => {
 			comment = { ...comment, ...data };

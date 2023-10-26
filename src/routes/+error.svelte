@@ -1,1 +1,1 @@
-<p>Something went wrong 404</p>
+<p>Something went wrong, sorry</p>

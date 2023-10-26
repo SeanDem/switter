@@ -1,18 +1,12 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import SweetCard from '../../shared/sweet-card.svelte';
-	import { getAllSweetDetail } from '$lib/services/sweet/sweet';
-	import { SweetType, type SweetDetail } from '$lib/types';
+	import SweetCard from '$lib/components/sweet-card.svelte';
+	import type { SweetDetail } from '$lib/types';
 
-	let sweetDetailList: SweetDetail[];
-
-	onMount(async () => {
-		sweetDetailList = await getAllSweetDetail({ sweetType: SweetType.SWEET });
-	});
+	export let data: { sweetDetailList: SweetDetail[] };
 </script>
 
-{#if sweetDetailList}
-	{#each sweetDetailList as sweetDetail (sweetDetail.sweet.id)}
+{#if data}
+	{#each data.sweetDetailList as sweetDetail (sweetDetail.sweet.id)}
 		<SweetCard {sweetDetail} />
 	{/each}
 {:else}

@@ -27,5 +27,5 @@
 		<p class="text-theme-text">{sweetDetail.sweet.text}</p>
 	</div>
 
-	<ActionBar sweet={sweetDetail.sweet} />
+	<ActionBar {sweetDetail} />
 </div>

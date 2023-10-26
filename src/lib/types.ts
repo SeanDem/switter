@@ -26,19 +26,28 @@ export interface Sweet extends UserAction {
 export interface SweetDetail {
 	sweet: Sweet;
 	user: UserProfile;
-	isLiked: boolean;
 	comments: SweetDetail[];
+	isLiked: boolean;
+	isReSweeted: boolean;
 }
 export interface SweetLike extends UserAction {
 	sweetId: string;
 }
 
 export interface Conversation {
-	id: string;
+	id?: string;
 	userId1: string;
 	userId2: string;
 	lastMessage: string;
-	lastTimestamp: Timestamp;
+	lastTimestamp: Timestamp | FieldValue;
+}
+
+export interface Message {
+	id: string;
+	conversationId: string;
+	senderId: string;
+	content: string;
+	timestamp: Timestamp | FieldValue;
 }
 
 export interface UserProfile {

@@ -54,16 +54,6 @@ export async function getSweet(tweetId: string): Promise<Sweet> {
 	});
 }
 
-export async function getAllSweets(type: SweetType): Promise<Sweet[]> {
-	return handleFirestoreError(async () => {
-		const q = query(sweetsCollection, orderBy('timestamp', 'desc'), where('type', '==', 'sweet'));
-		const snapshot = await getDocs(q);
-		return snapshot.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data()
-		}));
-	});
-}
 export async function getSweetDetail(sweetId: string): Promise<SweetDetail> {
 	return handleFirestoreError(async () => {
 		const sweet = await getSweet(sweetId);
@@ -132,22 +122,18 @@ async function fetchUsersByUids(userUids: string[]): Promise<{ [key: string]: Us
 
 export async function getSweetList(options: SweetOptions): Promise<Sweet[]> {
 	return handleFirestoreError(async () => {
-		console.log(options);
 		let q = query(sweetsCollection);
 
 		if (options.sweetType) {
 			q = query(q, where('type', '==', options.sweetType));
-			console.log(options.sweetType);
 		}
 
 		if (options.refSweetId) {
 			q = query(q, where('refSweetId', '==', options.refSweetId));
-			console.log(options.refSweetId);
 		}
 
 		if (options.userUid) {
 			q = query(q, where('userUid', '==', options.userUid));
-			console.log(options.userUid);
 		}
 
 		q = query(q, orderBy('timestamp', 'desc'));

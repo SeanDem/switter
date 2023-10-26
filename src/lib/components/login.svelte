@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { signGoogle, signUpEmail } from '$lib/services/auth';
-	import Profile from './profile.svelte';
 	let email = '';
 	let password = '';
 

@@ -3,11 +3,11 @@
 	import 'firebase/auth';
 	import { getAuth, onAuthStateChanged } from 'firebase/auth';
 	import type { User as FirebaseUser } from 'firebase/auth';
-	import Navbar from '../shared/navbar.svelte';
-	import Login from '../shared/login.svelte';
-	import Profile from '../shared/profile.svelte';
+	import Navbar from './navbar.svelte';
 	import type { UserProfile } from '$lib/types';
 	import { getUserPublic } from '$lib/services/user/profile';
+	import Login from '$lib/components/login.svelte';
+	import Profile from '$lib/components/profile.svelte';
 
 	const auth = getAuth();
 	let userProfileCompleted = false;

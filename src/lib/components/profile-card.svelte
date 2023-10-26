@@ -10,6 +10,10 @@
 	function follow() {
 		console.log('Follow button clicked for user:', user.userUid);
 	}
+
+	function message() {
+		console.log('message button');
+	}
 </script>
 
 <div role="button" tabindex="0" on:click={onCardClick} on:keydown={() => {}}>

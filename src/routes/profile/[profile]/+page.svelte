@@ -1,43 +1,40 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import { getAllSweetDetail } from '$lib/services/sweet/sweet';
-	import { SweetType, type SweetDetail, type UserProfile } from '$lib/types';
 	import { goto } from '$app/navigation';
-	import SweetCard from '../../../shared/sweet-card.svelte';
 	import { get } from 'svelte/store';
 	import { userAuth } from '$lib/store/store';
+	import type { SweetDetail, UserProfile } from '$lib/types';
+	import { getOrCreateConversationIdByUserID } from '$lib/services/messages';
+	import SweetCard from '$lib/components/sweet-card.svelte';
 
-	export let data: UserProfile;
-	let sweetDetailList: SweetDetail[];
+	export let data: { sweetDetailList: SweetDetail[]; userPofile: UserProfile };
 	const userUid = get(userAuth)?.uid;
-	onMount(async () => {
-		sweetDetailList = await getAllSweetDetail({
-			sweetType: SweetType.SWEET,
-			userUid: data.userUid
-		});
-	});
 
 	function isProfilePage() {
-		return userUid === data.userUid;
+		return userUid === data.userPofile.userUid;
 	}
 
 	const onSettingsClicked = (): void => {
-		goto(`${data.userUid}/settings`);
+		goto(`${data.userPofile.userUid}/settings`);
 	};
 
-
-	function follow() {
+	function onFollow() {
+		goto(`/messages/${data.userPofile.userUid}`);
+	}
+	async function onMessage() {
+		const conversationId = await getOrCreateConversationIdByUserID(data.userPofile.userUid);
+		goto(`/messages/${conversationId}`);
 	}
 </script>
 
 {#if isProfilePage()}
 	<button on:click={onSettingsClicked}>Settings</button>
 {:else}
-	<button on:click={follow}>Follow</button>
+	<button on:click={onMessage}>Message</button>
+	<button on:click={onFollow}>Follow</button>
 {/if}
 
-{#if sweetDetailList}
-	{#each sweetDetailList as sweetDetail (sweetDetail.sweet.id)}
+{#if data.sweetDetailList}
+	{#each data.sweetDetailList as sweetDetail (sweetDetail.sweet.id)}
 		<SweetCard {sweetDetail} />
 	{/each}
 {:else}
