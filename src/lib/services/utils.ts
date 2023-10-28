@@ -1,5 +1,5 @@
 import { where } from '@firebase/firestore';
-import { auth } from '$lib/firebase';
+import { auth } from '$lib/services/firebase';
 import { query, type QuerySnapshot } from 'firebase/firestore';
 
 export function handleFirestoreError(callback: () => Promise<any>): Promise<any> {

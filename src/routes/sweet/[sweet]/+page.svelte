@@ -1,7 +1,7 @@
 <script lang="ts">
 	import CommentCard from '$lib/components/comment-card.svelte';
 	import SweetCard from '$lib/components/sweet-card.svelte';
-	import type { SweetDetail } from '$lib/types';
+	import type { SweetDetail } from '$lib/types/types';
 
 	export let data: SweetDetail;
 </script>

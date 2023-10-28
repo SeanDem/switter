@@ -9,8 +9,21 @@ import {
 	where,
 	getDoc
 } from 'firebase/firestore';
-import { SWEETS_SUBCOLLECTION, sweetsCollection } from '../collections';
+import { db } from '$lib/services/firebase';
+import { sweetsCollection } from './collection';
+import { SWEETS_SUBCOLLECTION } from '$lib/types/types';
 
+export const getSweetDoc = (sweetId: string) => doc(db, 'sweets', sweetId);
+
+export const getLikersSubCollection = (sweetId: string) =>
+	collection(getSweetDoc(sweetId), SWEETS_SUBCOLLECTION.LIKERS);
+
+export const getCommentersSubCollection = (sweetId: string) =>
+	collection(getSweetDoc(sweetId), SWEETS_SUBCOLLECTION.COMMENTERS);
+
+export const getRetweetersSubCollection = (sweetId: string) =>
+	collection(getSweetDoc(sweetId), SWEETS_SUBCOLLECTION.RETWEETERS);
+	
 function getSubCollectionRef(
 	sweetId: string,
 	subCollectionName: SWEETS_SUBCOLLECTION

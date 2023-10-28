@@ -44,9 +44,8 @@ export interface Conversation {
 
 export interface Message {
 	id: string;
-	conversationId: string;
-	senderId: string;
-	content: string;
+	senderUid: string;
+	text: string;
 	timestamp: Timestamp | FieldValue;
 }
 
@@ -72,4 +71,10 @@ export enum SweetType {
 	SWEET = 'sweet',
 	RE_SWEET = 'reSweet',
 	COMMENT = 'comment'
+}
+
+export enum SWEETS_SUBCOLLECTION {
+	LIKERS = 'likers',
+	COMMENTERS = 'commenters',
+	RETWEETERS = 'resweeters'
 }

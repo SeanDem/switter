@@ -1,5 +1,5 @@
 import { getAllSweetDetail, getSweetDetail } from '$lib/services/sweet/sweet';
-import { SweetType, type SweetDetail } from '$lib/types.js';
+import { SweetType, type SweetDetail } from '$lib/types/types.js';
 
 export const load = async ({ params }) => {
 	const comments = await getAllSweetDetail({

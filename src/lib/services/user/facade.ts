@@ -1,8 +1,7 @@
-import { userProfileCollection } from './../collections';
 import { userAuth } from '$lib/store/store';
-import type { UserProfileAndInfo, UserProfile } from '$lib/types';
+import type { UserProfileAndInfo, UserProfile } from '$lib/types/types';
 import { get } from 'svelte/store';
-import { getUserProfileByUid } from './profile';
+import { getUserProfileByUid, userProfileCollection } from './profile';
 import { isUserAuth } from '../utils';
 import { updateEmail, updateProfile, type UserInfo } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';

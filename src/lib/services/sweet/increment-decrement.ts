@@ -1,9 +1,12 @@
-import type { Sweet } from '$lib/types';
+import type { Sweet } from '$lib/types/types';
 import { doc, updateDoc, increment } from 'firebase/firestore';
 import { isUserAuth, handleFirestoreError } from '../utils';
-import { sweetsCollection } from '../collections';
+import { sweetsCollection } from './collection';
 
-export async function incrementSweetProperty(tweetId: string, property: keyof Sweet): Promise<void> {
+export async function incrementSweetProperty(
+	tweetId: string,
+	property: keyof Sweet
+): Promise<void> {
 	return handleFirestoreError(async () => {
 		isUserAuth();
 		const tweetDoc = doc(sweetsCollection, tweetId);
@@ -11,7 +14,10 @@ export async function incrementSweetProperty(tweetId: string, property: keyof Sw
 	});
 }
 
-export async function decrementSweetProperty(tweetId: string, property: keyof Sweet): Promise<void> {
+export async function decrementSweetProperty(
+	tweetId: string,
+	property: keyof Sweet
+): Promise<void> {
 	return handleFirestoreError(async () => {
 		isUserAuth();
 		const tweetDoc = doc(sweetsCollection, tweetId);

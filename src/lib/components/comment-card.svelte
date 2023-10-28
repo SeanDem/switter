@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { SweetDetail } from '$lib/types';
+	import type { SweetDetail } from '$lib/types/types';
 	import { formatDateLarge } from '$lib/utils/data';
 	import { onMount } from 'svelte';
 	import ActionsBar from './action-bar.svelte';

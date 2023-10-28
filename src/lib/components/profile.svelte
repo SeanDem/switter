@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { userAuth } from '$lib/store/store';
-	import type { UserProfileAndInfo } from '$lib/types';
+	import type { UserProfileAndInfo } from '$lib/types/types';
 	import { signOut } from 'firebase/auth';
-	import { auth } from '$lib/firebase';
+	import { auth } from '$lib/services/firebase';
 	import { updateUserProfile } from '$lib/services/user/facade';
 
 	export let userProfileAndInfo: Partial<UserProfileAndInfo> = {};

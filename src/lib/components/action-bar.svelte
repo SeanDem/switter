@@ -1,16 +1,14 @@
 <script lang="ts">
 	import { incrementSweetProperty } from '$lib/services/sweet/increment-decrement';
-	import { createSweet, createTweet } from '$lib/services/sweet/sweet';
-	import { SweetType, type Sweet, type SweetDetail } from '$lib/types';
+	import { SweetType, type Sweet, type SweetDetail, SWEETS_SUBCOLLECTION } from '$lib/types/types';
 	import Post from './post.svelte';
-	import { userProfile } from '$lib/store/store';
+	import { userProfile$ } from '$lib/store/store';
 	import { get } from 'svelte/store';
 	import { isUserInSubCollection } from '$lib/services/sweet/sub-collections';
 	import { onMount } from 'svelte';
-	import { SWEETS_SUBCOLLECTION } from '$lib/services/collections';
-
+	import { createSweet } from '$lib/services/sweet/sweet';
 	export let sweetDetail: SweetDetail;
-	const userProfileData = get(userProfile);
+	const userProfileData = get(userProfile$);
 
 	onMount(async () => {
 		sweetDetail.isLiked = await isUserInSubCollection(
@@ -27,7 +25,7 @@
 
 	function onComment(event: CustomEvent<any>) {
 		sweetDetail.sweet.commentsCount += 1;
-		createTweet(
+		createSweet(
 			{ sweetType: SweetType.COMMENT, userUid: userProfileData?.userUid },
 			event.detail.text
 		);

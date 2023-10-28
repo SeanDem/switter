@@ -1,7 +1,10 @@
 import { query, addDoc, doc, getDocs, setDoc } from '@firebase/firestore';
-import type { UserPrivate } from '$lib/types';
-import { userPrivateCollection } from '../collections';
+import type { UserPrivate } from '$lib/types/types';
 import { isUserAuth, handleFirestoreError, queryByUID } from '../utils';
+import { db } from '$lib/services/firebase';
+import { collection } from 'firebase/firestore';
+
+export const userPrivateCollection = collection(db, 'userPrivate');
 
 export async function addUserPrivate(userInfo: UserPrivate): Promise<void> {
 	return handleFirestoreError(async () => {

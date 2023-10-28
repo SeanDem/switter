@@ -1,9 +1,11 @@
 import { doc, getDocs } from '@firebase/firestore';
-import type { UserProfile } from '$lib/types';
-import { userProfileCollection } from '../collections';
+import type { UserProfile } from '$lib/types/types';
 import { handleFirestoreError } from '../utils';
-import { getDoc, query } from 'firebase/firestore';
+import { collection, getDoc, query } from 'firebase/firestore';
 import type { User } from 'firebase/auth';
+import { db } from '$lib/services/firebase';
+
+export const userProfileCollection = collection(db, 'userProfile');
 
 export async function getUserProfileByUid(userUid: string): Promise<UserProfile> {
 	return handleFirestoreError(async () => {

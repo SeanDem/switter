@@ -1,4 +1,4 @@
-import { userProfile } from './../../store/store';
+import { userProfile$ } from './../../store/store';
 import { serverTimestamp } from '@firebase/firestore';
 import {
 	addDoc,
@@ -11,37 +11,17 @@ import {
 	orderBy,
 	where
 } from 'firebase/firestore';
-import { sweetsCollection, userProfileCollection } from '../collections';
 import { isUserAuth, handleFirestoreError } from '../utils';
-import { SweetType, type Sweet, type SweetDetail, type UserProfile } from '$lib/types';
+import { SweetType, type Sweet, type SweetDetail, type UserProfile } from '$lib/types/types';
 import { get } from 'svelte/store';
+import { sweetsCollection } from './collection';
+import { userProfileCollection } from '../user/profile';
 
 export type SweetOptions = {
 	sweetType: SweetType;
 	refSweetId?: string;
 	userUid?: string;
 };
-
-export async function createTweet(options: SweetOptions, text: string): Promise<string> {
-	const userPublicData = get(userProfile);
-	if (!userPublicData) throw new Error('User not authenticated');
-	const tweet: Sweet = {
-		text,
-		refSweetId: options.refSweetId ?? '',
-		type: options.sweetType,
-		userUid: userPublicData.userUid,
-		timestamp: serverTimestamp(),
-		likesCount: 0,
-		commentsCount: 0,
-		retweetsCount: 0
-	};
-
-	return handleFirestoreError(async () => {
-		isUserAuth();
-		const docRef = await addDoc(sweetsCollection, tweet);
-		return docRef.id;
-	});
-}
 
 export async function getSweet(tweetId: string): Promise<Sweet> {
 	return handleFirestoreError(async () => {
@@ -147,7 +127,7 @@ export async function getSweetList(options: SweetOptions): Promise<Sweet[]> {
 }
 
 export async function createSweet(options: SweetOptions, text: string): Promise<string> {
-	const currentUser = get(userProfile);
+	const currentUser = get(userProfile$);
 	if (!currentUser) throw new Error('User not authenticated');
 
 	let sweet: Sweet = {

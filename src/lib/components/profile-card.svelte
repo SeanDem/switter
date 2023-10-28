@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import type { UserProfile } from '$lib/types';
+	import type { UserProfile } from '$lib/types/types';
 	export let user: UserProfile;
 
 	function onCardClick() {

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { formatDateSmall } from '$lib/utils/data';
-	import type { SweetDetail, Sweet } from '$lib/types';
+	import type { SweetDetail, Sweet } from '$lib/types/types';
 	import ActionBar from './action-bar.svelte';
 	import { goto } from '$app/navigation';
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { fetchAllUsers } from '$lib/services/user/profile';
-	import type { UserProfile } from '$lib/types';
+	import type { UserProfile } from '$lib/types/types';
 	import ProfileCard from '../../lib/components/profile-card.svelte';
 
 	let users: UserProfile[] = [];
