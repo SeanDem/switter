@@ -5,7 +5,7 @@ import { sweetsCollection } from './collection';
 
 export async function incrementSweetProperty(
 	tweetId: string,
-	property: keyof Sweet
+	property: 'likesCount' | 'retweetsCount' | 'commentsCount'
 ): Promise<void> {
 	return handleFirestoreError(async () => {
 		isUserAuth();
@@ -16,7 +16,7 @@ export async function incrementSweetProperty(
 
 export async function decrementSweetProperty(
 	tweetId: string,
-	property: keyof Sweet
+	property: 'likesCount' | 'retweetsCount' | 'commentsCount'
 ): Promise<void> {
 	return handleFirestoreError(async () => {
 		isUserAuth();

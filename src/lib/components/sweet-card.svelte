@@ -3,11 +3,13 @@
 	import type { SweetDetail, Sweet } from '$lib/types/types';
 	import ActionBar from './action-bar.svelte';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
 	export let sweetDetail: SweetDetail;
 
 	const onTweetClicked = (): void => {
-		goto(`/sweet/${sweetDetail.sweet.id}`);
+		const sweetId = sweetDetail.sweet.id;
+		if ($page.params.sweet !== sweetId) goto(`/sweet/${sweetId}`);
 	};
 </script>
 

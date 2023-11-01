@@ -7,23 +7,15 @@ import {
 	getDocs,
 	query,
 	where,
-	getDoc
+	getDoc,
+	addDoc
 } from 'firebase/firestore';
 import { db } from '$lib/services/firebase';
 import { sweetsCollection } from './collection';
-import { SWEETS_SUBCOLLECTION } from '$lib/types/types';
+import { handleFirestoreError } from '../utils';
+import type { SWEETS_SUBCOLLECTION } from '$lib/types/types';
 
 export const getSweetDoc = (sweetId: string) => doc(db, 'sweets', sweetId);
-
-export const getLikersSubCollection = (sweetId: string) =>
-	collection(getSweetDoc(sweetId), SWEETS_SUBCOLLECTION.LIKERS);
-
-export const getCommentersSubCollection = (sweetId: string) =>
-	collection(getSweetDoc(sweetId), SWEETS_SUBCOLLECTION.COMMENTERS);
-
-export const getRetweetersSubCollection = (sweetId: string) =>
-	collection(getSweetDoc(sweetId), SWEETS_SUBCOLLECTION.RETWEETERS);
-	
 function getSubCollectionRef(
 	sweetId: string,
 	subCollectionName: SWEETS_SUBCOLLECTION
@@ -32,33 +24,58 @@ function getSubCollectionRef(
 	return collection(sweetDocInstance, subCollectionName);
 }
 
-export async function removeFromSubCollection(
+export async function removeDao(
 	sweetId: string,
-	subCollectionName: SWEETS_SUBCOLLECTION
+	subCollectionName: SWEETS_SUBCOLLECTION,
+	docId: string
 ) {
-	const subDoc = doc(getSubCollectionRef(sweetId, subCollectionName), sweetId);
+	return handleFirestoreError(async () => {
+	const subDoc = doc(getSubCollectionRef(sweetId, subCollectionName), docId);
 	return await deleteDoc(subDoc);
+});
 }
-// export async function getDocumentFromSubCollection(
-// 	sweetId: string,
-// 	subCollectionName: SUBCOLLECTION_NAMES
-// ): Promise<DocumentData> {
-// 	const subDocRef = doc(getSubCollectionRef(sweetId, subCollectionName), sweetId);
-// 	const docSnapshot = await getDoc(subDocRef);
 
-// 	if (docSnapshot.exists()) {
-// 		return docSnapshot.data();
-// }
-
-export async function isUserInSubCollection(
+export async function addToSubCollection(
 	sweetId: string,
 	subCollectionName: SWEETS_SUBCOLLECTION,
 	userId: string
-): Promise<boolean> {
-	const subCollectionRef = getSubCollectionRef(sweetId, subCollectionName);
+  ): Promise<void> {
+	return handleFirestoreError(async () => {
+	  const subCollectionRef = getSubCollectionRef(sweetId, subCollectionName);
+	  await addDoc(subCollectionRef, { userId: userId });
+	});
+  }
+  
+  export async function isUserInSubCollection(
+	sweetId: string,
+	subCollectionName: SWEETS_SUBCOLLECTION,
+	userId: string
+  ): Promise<string | null> {
+	return handleFirestoreError(async () => {
+	  const subCollectionRef = getSubCollectionRef(sweetId, subCollectionName);
+	  const q = query(subCollectionRef, where('userId', '==', userId));
+	  const querySnapshot = await getDocs(q);
+	  
+	  if (!querySnapshot.empty) {
+		return querySnapshot.docs[0].id;
+	  }
+	  
+	  return null;
+	});
+  }
 
-	const q = query(subCollectionRef, where('userId', '==', userId));
-	const querySnapshot = await getDocs(q);
-
-	return !querySnapshot.empty;
-}
+  export async function removeFromSubCollection(
+	sweetId: string,
+	subCollectionName: SWEETS_SUBCOLLECTION,
+	userId: string
+  ): Promise<void> {
+	return handleFirestoreError(async () => {
+	  const docId = await isUserInSubCollection(sweetId, subCollectionName, userId);
+	  
+	  if (docId) {
+		await removeDao(sweetId, subCollectionName, docId);
+	  } else {
+		console.log(`No document found for userId: ${userId}`);
+	  }
+	});
+  }

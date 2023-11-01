@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { userAuth, userProfile$ } from '$lib/store/store';
-	import 'firebase/auth';
-	import { getAuth, onAuthStateChanged } from 'firebase/auth';
-	import type { User as FirebaseUser } from 'firebase/auth';
-	import Navbar from './navbar.svelte';
-	import type { UserProfile } from '$lib/types/types';
-	import { getUserPublic } from '$lib/services/user/profile';
 	import Login from '$lib/components/login.svelte';
 	import Profile from '$lib/components/profile.svelte';
-	import { get } from 'svelte/store';
 	import { auth } from '$lib/services/firebase';
+	import { getUserPublic } from '$lib/services/user/profile';
+	import { userAuth, userProfile$ } from '$lib/store/store';
+	import type { UserProfile } from '$lib/types/types';
+	import 'firebase/auth';
+	import type { User as FirebaseUser } from 'firebase/auth';
+	import { onAuthStateChanged } from 'firebase/auth';
+	import Navbar from './navbar.svelte';
 
 	let userProfileCompleted = false;
 	let loading = true;

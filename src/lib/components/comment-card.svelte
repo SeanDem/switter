@@ -5,16 +5,17 @@
 	import ActionsBar from './action-bar.svelte';
 	import { getSweetDetail } from '$lib/services/sweet/sweet';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 	export let comment: SweetDetail;
 
-	//ideally i would like to remove this. Since, however, it can recuse forever i think we need load in the component
 	onMount(() => {
 		getSweetDetail(comment.sweet.id ?? '').then((data) => {
 			comment = { ...comment, ...data };
 		});
 	});
-	function onCommentClicked(): any {
-		goto(`/sweet/${comment.sweet.id}`);
+	function onCommentClicked(): void {
+		const sweetId = comment.sweet.id;
+		if ($page.params.sweet !== sweetId) goto(`/sweet/${sweetId}`);
 	}
 </script>
 
@@ -35,5 +36,5 @@
 		<p class="text-theme-text">{comment.sweet.text}</p>
 	</div>
 
-	<ActionsBar sweet={comment.sweet} />
+	<ActionsBar sweetDetail={comment} />
 </div>

@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import type { UserProfile } from '$lib/types/types';
+	import { page } from '$app/stores';
 	export let user: UserProfile;
 
 	function onCardClick() {
+		if ($page.route){
+
+		}
 		goto(`/profile/${user.userUid}`);
 	}
 

@@ -2,42 +2,42 @@
 	import {
 		addNewMessage,
 		getConversationById,
-		getMessagesByConversationId,
 		listenToMessagesByConversationId
 	} from '$lib/services/messages';
 	import { getUserProfileByUid } from '$lib/services/user/profile';
 	import { userProfile$ } from '$lib/store/store';
 	import type { Message, UserProfile } from '$lib/types/types';
-	import { collection } from 'firebase/firestore';
 	import { onDestroy, onMount } from 'svelte';
 	import { get } from 'svelte/store';
+	import { page } from '$app/stores';
+
 	let unsubscribeFromMessages: (() => void) | undefined;
 	let messageText: string;
 	let messageList: Message[] = [];
-	$: messageList;
 	let userProfileData = get(userProfile$);
 	let otherUserProfile: UserProfile;
-	export let data: { conversationId: string };
 
 	const onSend = async () => {
 		if (userProfileData && messageText) {
-			await addNewMessage(data.conversationId, {
-				text: messageText,
-				senderUid: userProfileData?.userUid ?? ''
-			});
-			messageText = '';
+			await Promise.all([
+				addNewMessage($page.params.conversationId, {
+					text: messageText,
+					senderUid: userProfileData?.userUid ?? ''
+				}),
+				Promise.resolve((messageText = ''))
+			]);
 		}
 	};
 
 	onMount(async () => {
-		const conversation = await getConversationById(data.conversationId);
+		const conversation = await getConversationById($page.params.conversationId);
 		const otherUserUid =
 			conversation.userId1 !== userProfileData?.userUid
 				? conversation.userId1
 				: conversation.userId2;
 		otherUserProfile = await getUserProfileByUid(otherUserUid);
 		unsubscribeFromMessages = listenToMessagesByConversationId(
-			data.conversationId,
+			$page.params.conversationId,
 			(newMessages: Message[]) => {
 				messageList = newMessages;
 			}
