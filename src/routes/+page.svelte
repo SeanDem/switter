@@ -1,6 +1,14 @@
 <script lang="ts">
-	export let data: any;
+	import SweetCard from '$lib/components/sweet-card.svelte';
+	import type { SweetDetail } from '$lib/types/types';
+
+	export let data: { sweetDetailList: SweetDetail[] };
 </script>
 
-<div>cookies data</div>
-<div>{JSON.stringify(data)}</div>
+{#if data}
+	{#each data.sweetDetailList as sweetDetail (sweetDetail.sweet.id)}
+		<SweetCard {sweetDetail} />
+	{/each}
+{:else}
+	<div>Loading...</div>
+{/if}

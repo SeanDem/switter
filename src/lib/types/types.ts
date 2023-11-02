@@ -29,6 +29,7 @@ export interface SweetDetail {
 	comments: SweetDetail[];
 	isLiked: boolean;
 	isReSweeted: boolean;
+	isCommented: boolean;
 }
 export interface SweetLike extends UserAction {
 	sweetId: string;

@@ -6,7 +6,7 @@ export default {
 			whitelistPatterns: [/svelte-/]
 		}
 	},
-	daisyui: { themes: ['light', 'dark', 'cupcake'] },
+	daisyui: { themes: ['light'] },
 	variants: {},
 	theme: {
 		fontFamily: {

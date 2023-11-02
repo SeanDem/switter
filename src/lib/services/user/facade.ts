@@ -1,4 +1,4 @@
-import { userAuth } from '$lib/store/store';
+import { userAuthStore } from '$lib/store/store';
 import type { UserProfileAndInfo, UserProfile } from '$lib/types/types';
 import { get } from 'svelte/store';
 import { getUserProfileByUid, userProfileCollection } from './profile';
@@ -7,7 +7,7 @@ import { updateEmail, updateProfile, type UserInfo } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 
 export async function fetchCurrentUserProfileData(): Promise<UserProfileAndInfo | undefined> {
-	const currentUser = get(userAuth);
+	const currentUser = get(userAuthStore);
 	if (currentUser && currentUser.uid) {
 		const userProfile = await getUserProfileByUid(currentUser.uid);
 		return {
@@ -33,7 +33,7 @@ export async function updateUserProfile(updatedData: UserProfileAndInfo): Promis
 	await updateUserPublic(updatedData);
 }
 async function updateUserPublic(updatedData: UserProfile) {
-	const currentUser = get(userAuth);
+	const currentUser = get(userAuthStore);
 	if (!currentUser) throw new Error('User not authenticated');
 	const userPublic: UserProfile = {
 		userUid: currentUser.uid,
@@ -50,7 +50,7 @@ async function updateUserPublic(updatedData: UserProfile) {
 	await setDoc(userDocRef, userPublic, { merge: true });
 }
 export async function updateUserInfo(userInfo: UserInfo): Promise<void> {
-	const currentUser = get(userAuth);
+	const currentUser = get(userAuthStore);
 	if (!currentUser) throw new Error('User not authenticated');
 	try {
 		if (userInfo.email) await updateEmail(currentUser, userInfo.email);

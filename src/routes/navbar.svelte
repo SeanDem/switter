@@ -4,20 +4,20 @@
 	import { SweetType } from '$lib/types/types';
 	import { get } from 'svelte/store';
 	import Post from '../lib/components/post.svelte';
-	import { userProfile$ } from '$lib/store/store';
+	import { userProfileStore } from '$lib/store/store';
 	let active = '';
 
 	function onSubmitSweet(event: CustomEvent<any>) {
 		createSweet({ sweetType: SweetType.SWEET }, event.detail.text);
 	}
 	function gotoProfile() {
-		const userProfileData = get(userProfile$);
+		const userProfileData = get(userProfileStore);
 		goto(`/profile/${userProfileData?.userUid}`);
 	}
 </script>
 
 <nav class="sidebar">
-	<a href="/home" class={active === 'home' ? 'active' : ''}>Home</a>
+	<a href="/" class={active === '' ? 'active' : ''}>Home</a>
 	<a href="/search" class={active === 'search' ? 'active' : ''}>Search</a>
 	<a href="/messages" class={active === 'messages' ? 'active' : ''}>Messages</a>
 	<Post buttonName="Post" on:submit={(event) => onSubmitSweet(event)} />

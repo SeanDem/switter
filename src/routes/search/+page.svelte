@@ -1,16 +1,11 @@
 <script lang="ts">
-	import { fetchAllUsers } from '$lib/services/user/profile';
 	import type { UserProfile } from '$lib/types/types';
 	import ProfileCard from '../../lib/components/profile-card.svelte';
-
-	let users: UserProfile[] = [];
-	async function onGetUsers() {
-		users = await fetchAllUsers();
-	}
+	export let data: { users: UserProfile[] };
+	const users: UserProfile[] = data.users;
 </script>
 
 <input type="text" placeholder="Search..." />
-<button on:click={onGetUsers}>Get All Users</button>
 
 {#each users as user}
 	<ProfileCard {user} />

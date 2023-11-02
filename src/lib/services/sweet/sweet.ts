@@ -16,7 +16,7 @@ import {
 import { get } from 'svelte/store';
 import { userProfileCollection } from '../user/profile';
 import { handleFirestoreError, isUserAuth } from '../utils';
-import { userProfile$ } from './../../store/store';
+import { userProfileStore } from './../../store/store';
 import { sweetsCollection } from './collection';
 
 export type SweetOptions = {
@@ -103,7 +103,7 @@ async function fetchUsersByUids(userUids: string[]): Promise<{ [key: string]: Us
 }
 
 export async function createSweet(options: SweetOptions, text: string): Promise<string> {
-	const currentUser = get(userProfile$);
+	const currentUser = get(userProfileStore);
 	if (!currentUser) throw new Error('User not authenticated');
 
 	let sweet: Sweet = {
@@ -176,12 +176,11 @@ export async function getSweet(options: SweetOptions): Promise<Sweet | null> {
 }
 export async function getAndDeleteSweet(options: SweetOptions): Promise<void> {
 	return handleFirestoreError(async () => {
-	  const sweet = await getSweet(options);
-	  if (sweet && sweet.id) {
-		await deleteSweetById(sweet.id);
-	  } else {
-		throw new Error("No Sweet document found to delete");
-	  }
+		const sweet = await getSweet(options);
+		if (sweet && sweet.id) {
+			await deleteSweetById(sweet.id);
+		} else {
+			throw new Error('No Sweet document found to delete');
+		}
 	});
-  }
-  
+}

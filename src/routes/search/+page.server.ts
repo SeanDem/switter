@@ -1,5 +1,6 @@
-export const load = (async ({ cookies }) => {
-    console.log('cookies', cookies);
-    const sessionid = cookies.get('sessionid');
-    return false
-}) 
+import { fetchAllUsers } from "$lib/services/user/profile";
+
+export const load = async () => {
+    const users = await fetchAllUsers();
+    return { users }
+}

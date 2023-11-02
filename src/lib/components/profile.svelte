@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { userAuth } from '$lib/store/store';
+	import { userAuthStore } from '$lib/store/store';
 	import type { UserProfileAndInfo } from '$lib/types/types';
 	import { signOut } from 'firebase/auth';
 	import { auth } from '$lib/services/firebase';
@@ -11,7 +11,7 @@
 	};
 
 	const submitProfile = () => {
-		if (!$userAuth) return;
+		if (!$userAuthStore) return;
 		if (!userProfileAndInfo.displayName || !userProfileAndInfo.handle) {
 			alert('Name and handle are required.');
 			return;
@@ -22,6 +22,11 @@
 		userProfileAndInfo.userDisplayName = userProfileAndInfo.displayName ?? '';
 		userProfileAndInfo.userProfileUrl = userProfileAndInfo.handle;
 		userProfileAndInfo.userUid = userProfileAndInfo.userUid;
+	};
+
+	const onSignout = () => {
+		document.cookie = 'userAuth=;';
+		signOut(auth);
 	};
 </script>
 
@@ -70,5 +75,5 @@
 	<button on:click={submitProfile}>Save</button>
 	<br />
 
-	<button on:click={() => signOut(auth)}>Logout</button>
+	<button on:click={onSignout}>Logout</button>
 </div>

@@ -1,52 +1,36 @@
 <script lang="ts">
-	import {
-		addNewMessage,
-		getConversationById,
-		listenToMessagesByConversationId
-	} from '$lib/services/messages';
-	import { getUserProfileByUid } from '$lib/services/user/profile';
-	import { userProfile$ } from '$lib/store/store';
+	import { page } from '$app/stores';
+	import { addNewMessage, listenToMessagesByConversationId } from '$lib/services/messages';
+	import { userProfileStore } from '$lib/store/store';
 	import type { Message, UserProfile } from '$lib/types/types';
 	import { onDestroy, onMount } from 'svelte';
-	import { get } from 'svelte/store';
-	import { page } from '$app/stores';
+	export let data: { otherUserProfile: UserProfile; messageList: Message[] };
 
 	let unsubscribeFromMessages: (() => void) | undefined;
 	let messageText: string;
 	let messageList: Message[] = [];
-	let userProfileData = get(userProfile$);
-	let otherUserProfile: UserProfile;
+	const userProfile: UserProfile | null = $userProfileStore;
+	const otherUserProfile: UserProfile = data.otherUserProfile;
 
 	const onSend = async () => {
-		if (userProfileData && messageText) {
-			await Promise.all([
-				addNewMessage($page.params.conversationId, {
-					text: messageText,
-					senderUid: userProfileData?.userUid ?? ''
-				}),
-				Promise.resolve((messageText = ''))
-			]);
+		if (userProfile && messageText) {
+			await addNewMessage($page.params.conversationId, {
+				text: messageText,
+				senderUid: userProfile.userUid
+			});
+			messageText = '';
 		}
 	};
 
-	onMount(async () => {
-		const conversation = await getConversationById($page.params.conversationId);
-		const otherUserUid =
-			conversation.userId1 !== userProfileData?.userUid
-				? conversation.userId1
-				: conversation.userId2;
-		otherUserProfile = await getUserProfileByUid(otherUserUid);
+	onMount(() => {
 		unsubscribeFromMessages = listenToMessagesByConversationId(
 			$page.params.conversationId,
-			(newMessages: Message[]) => {
-				messageList = newMessages;
-			}
+			(newMessages) => (messageList = newMessages)
 		);
 	});
+
 	onDestroy(() => {
-		if (unsubscribeFromMessages) {
-			unsubscribeFromMessages();
-		}
+		unsubscribeFromMessages?.();
 	});
 </script>
 

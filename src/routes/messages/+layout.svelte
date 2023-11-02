@@ -1,17 +1,9 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { getConversationsForUser } from '$lib/services/messages';
-	import { userProfile$ } from '$lib/store/store';
-	import type { Conversation, UserProfile } from '$lib/types/types';
+	import type { Conversation } from '$lib/types/types';
 	import { formatDateSmall } from '$lib/utils/data';
-	import { onMount } from 'svelte';
-	import { get } from 'svelte/store';
-	let conversationList: Conversation[];
-	let userProfileUid: string;
-	onMount(async () => {
-		userProfileUid = get(userProfile$)?.userUid ?? '';
-		conversationList = await getConversationsForUser(userProfileUid);
-	});
+	export let data: { conversationList: Conversation[] };
+	const conversationList = data.conversationList;
 </script>
 
 {#if conversationList}

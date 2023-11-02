@@ -3,7 +3,7 @@
 	import Profile from '$lib/components/profile.svelte';
 	import { auth } from '$lib/services/firebase';
 	import { getUserPublic } from '$lib/services/user/profile';
-	import { userAuth, userProfile$ } from '$lib/store/store';
+	import { userAuthStore, userProfileStore } from '$lib/store/store';
 	import type { UserProfile } from '$lib/types/types';
 	import 'firebase/auth';
 	import type { User as FirebaseUser } from 'firebase/auth';
@@ -12,27 +12,29 @@
 
 	let userProfileCompleted = false;
 	let loading = true;
-
-	onAuthStateChanged(auth, async (authUser: FirebaseUser | null) => {
-		userAuth.set(authUser);
-		if (authUser) {
-			userProfileCompleted = await checkAndSetUserProfile(authUser);
-		}
-		loading = false;
-	});
+	if (typeof window !== 'undefined') {
+		onAuthStateChanged(auth, async (authUser: FirebaseUser | null) => {
+			document.cookie = `userUid = ${authUser?.uid}`;
+			userAuthStore.set(authUser);
+			if (authUser) {
+				userProfileCompleted = await checkAndSetUserProfile(authUser);
+			}
+			loading = false;
+		});
+	}
 
 	async function checkAndSetUserProfile(authUser: FirebaseUser): Promise<boolean> {
 		const res: UserProfile = await getUserPublic(authUser);
-		userProfile$.set(res);
+		userProfileStore.set(res);
 		return !!res && !!res.handle && !!res.userDisplayName && !!res.userUid;
 	}
 </script>
 
 {#if loading}
 	<p>Loading...</p>
-{:else if !$userAuth}
+{:else if !$userAuthStore}
 	<Login />
-{:else if $userAuth && !userProfileCompleted}
+{:else if $userAuthStore && !userProfileCompleted}
 	<Profile />
 {:else}
 	<Navbar />

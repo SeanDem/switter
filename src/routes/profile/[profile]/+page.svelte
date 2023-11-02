@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { get } from 'svelte/store';
-	import { userProfile$ } from '$lib/store/store';
+	import { userProfileStore } from '$lib/store/store';
 	import { getOrCreateConversationIdByUserID } from '$lib/services/messages';
 	import SweetCard from '$lib/components/sweet-card.svelte';
 	import { onMount } from 'svelte';
@@ -16,7 +16,7 @@
 
 	let isLoading = true;
 	onMount(async () => {
-		userUid = get(userProfile$)?.userUid ?? '';
+		userUid = get(userProfileStore)?.userUid ?? '';
 
 		userProfile = await getUserProfileByUid($page.params.profile);
 		sweetDetailList = await getAllSweetDetail({

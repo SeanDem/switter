@@ -9,14 +9,14 @@
 		removeFromSubCollection
 	} from '$lib/services/sweet/sub-collections';
 	import { createSweet, getAndDeleteSweet } from '$lib/services/sweet/sweet';
-	import { userProfile$ } from '$lib/store/store';
+	import { userProfileStore } from '$lib/store/store';
 	import { SWEETS_SUBCOLLECTION, SweetType, type SweetDetail } from '$lib/types/types';
 	import { onMount } from 'svelte';
 	import { get, writable } from 'svelte/store';
 	import Post from './post.svelte';
 
 	export let sweetDetail: SweetDetail;
-	const userProfileData = get(userProfile$);
+	const userProfileData = get(userProfileStore);
 	let isLiked = writable(false);
 	let isRetweeted = writable(false);
 	let isCommented = writable(false);
@@ -54,7 +54,6 @@
 			SWEETS_SUBCOLLECTION.COMMENTERS,
 			userProfileData?.userUid ?? ''
 		);
-		isCommented.set(true);
 	}
 
 	function onReSweet() {

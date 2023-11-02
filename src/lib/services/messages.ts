@@ -16,7 +16,7 @@ import {
 	onSnapshot
 } from 'firebase/firestore';
 import type { Conversation, Message } from '$lib/types/types';
-import { userAuth } from '$lib/store/store';
+import { userAuthStore } from '$lib/store/store';
 import { get } from 'svelte/store';
 import { handleFirestoreError } from './utils';
 import { db } from '$lib/services/firebase';
@@ -29,7 +29,7 @@ export const getMessageSubCollection = (conversationId: string) =>
 
 export const getOrCreateConversationIdByUserID = async (userUid: string): Promise<string> => {
 	return handleFirestoreError(async () => {
-		const currentUserUid = get(userAuth)?.uid;
+		const currentUserUid = get(userAuthStore)?.uid;
 
 		const q1 = query(
 			messagesCollection,
@@ -99,24 +99,30 @@ export const getConversationsForUser = async (userUid: string): Promise<Conversa
 		const q1 = query(messagesCollection, where('userId1', '==', userUid));
 		const q2 = query(messagesCollection, where('userId2', '==', userUid));
 
-		const [conversations1Snap, conversations2Snap] = await Promise.all([getDocs(q1), getDocs(q2)]);
-		const conversations1 = conversations1Snap.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data()
-		})) as Message[];
-		const conversations2 = conversations2Snap.docs.map((doc) => ({
-			id: doc.id,
-			...doc.data()
-		})) as Message[];
+		const [snap1, snap2] = await Promise.all([getDocs(q1), getDocs(q2)]);
+		const conv1 = snap1.docs.map(
+			(doc) =>
+				({
+					id: doc.id,
+					...doc.data(),
+					lastTimestamp: doc.data().lastTimestamp.toDate()
+				} as Conversation)
+		);
+		const conv2 = snap1.docs.map(
+			(doc) =>
+				({
+					id: doc.id,
+					...doc.data(),
+					lastTimestamp: doc.data().lastTimestamp.toDate()
+				} as Conversation)
+		);
 
-		const conversations = conversations1.concat(conversations2);
-		conversations.sort((a, b) => {
-			if (a.timestamp && b.timestamp) {
-				return (b.timestamp as Timestamp).seconds - (a.timestamp as Timestamp).seconds;
-			}
-			return 0;
-		});
-		return conversations;
+		// const conversations = [...conv1, ...conv2].sort((a, b) => b.timestamp - a.timestamp);
+
+		// conversations.forEach((conversation) => {
+		// 	conversation.timestamp;
+		// });
+		return [...conv1, ...conv2];
 	});
 };
 
