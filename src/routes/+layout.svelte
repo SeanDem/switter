@@ -4,17 +4,19 @@
 	import { auth } from '$lib/services/firebase';
 	import { getUserPublic } from '$lib/services/user/profile';
 	import { userAuthStore, userProfileStore } from '$lib/store/store';
-	import type { UserProfile } from '$lib/types/types';
 	import 'firebase/auth';
 	import type { User as FirebaseUser } from 'firebase/auth';
 	import { onAuthStateChanged } from 'firebase/auth';
+	import type { UserProf } from '$lib/types/types';
 	import Navbar from './navbar.svelte';
+	import { page } from '$app/stores';
+	import { beforeNavigate } from '$app/navigation';
 
 	let userProfileCompleted = false;
 	let loading = true;
 	if (typeof window !== 'undefined') {
 		onAuthStateChanged(auth, async (authUser: FirebaseUser | null) => {
-			document.cookie = `userUid = ${authUser?.uid}`;
+			document.cookie = `uid = ${authUser?.uid}`;
 			userAuthStore.set(authUser);
 			if (authUser) {
 				userProfileCompleted = await checkAndSetUserProfile(authUser);
@@ -24,10 +26,14 @@
 	}
 
 	async function checkAndSetUserProfile(authUser: FirebaseUser): Promise<boolean> {
-		const res: UserProfile = await getUserPublic(authUser);
+		const res: UserProf = await getUserPublic(authUser);
 		userProfileStore.set(res);
-		return !!res && !!res.handle && !!res.userDisplayName && !!res.userUid;
+		return !!res && !!res.handle && !!res.displayName && !!res.uid;
 	}
+
+	beforeNavigate(({ to, cancel }) => {
+		if ($page.url.pathname === to?.url.pathname) cancel();
+	});
 </script>
 
 {#if loading}

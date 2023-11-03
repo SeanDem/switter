@@ -1,64 +1,29 @@
-import { userAuthStore } from '$lib/store/store';
-import type { UserProfileAndInfo, UserProfile } from '$lib/types/types';
+import { userAuthStore, userProfileStore } from '$lib/store/store';
+import type { UserProf } from '$lib/types/types';
+import { doc, setDoc } from 'firebase/firestore';
 import { get } from 'svelte/store';
 import { getUserProfileByUid, userProfileCollection } from './profile';
-import { isUserAuth } from '../utils';
-import { updateEmail, updateProfile, type UserInfo } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
 
-export async function fetchCurrentUserProfileData(): Promise<UserProfileAndInfo | undefined> {
-	const currentUser = get(userAuthStore);
-	if (currentUser && currentUser.uid) {
-		const userProfile = await getUserProfileByUid(currentUser.uid);
-		return {
-			...userProfile,
-			displayName: currentUser.displayName,
-			birthday: userProfile.birthday,
-			bio: userProfile.bio,
-			handle: userProfile.handle,
-			phoneNumber: currentUser.phoneNumber,
-			photoURL: currentUser.photoURL,
-			providerId: currentUser.providerId,
-			userUid: currentUser.uid,
-			followersCount: userProfile.followersCount,
-			followingCount: userProfile.followingCount
-		} as UserProfileAndInfo;
-	}
-	return;
+export async function getCurrentUserProfile(uid: string): Promise<UserProf> {
+	return await getUserProfileByUid(uid);
 }
 
-export async function updateUserProfile(updatedData: UserProfileAndInfo): Promise<void> {
-	isUserAuth();
-	await updateUserInfo(updatedData);
-	await updateUserPublic(updatedData);
-}
-async function updateUserPublic(updatedData: UserProfile) {
+export async function updateUserProfile(updatedData: UserProf): Promise<void> {
 	const currentUser = get(userAuthStore);
 	if (!currentUser) throw new Error('User not authenticated');
-	const userPublic: UserProfile = {
-		userUid: currentUser.uid,
-		userDisplayName: updatedData.userDisplayName ?? '',
-		userProfileUrl: updatedData.userProfileUrl ?? '',
+	
+	const userPublic: UserProf = {
+		uid: currentUser.uid,
+		displayName: updatedData.displayName ?? '',
+		profileUrl: updatedData.profileUrl ?? '',
 		handle: updatedData.handle,
 		bio: updatedData.bio ?? '',
 		birthday: updatedData.birthday ?? '',
 		followersCount: 0,
-		followingCount: 0
+		followingCount: 0,
+		email: ''
 	};
 
 	const userDocRef = doc(userProfileCollection, currentUser?.uid);
 	await setDoc(userDocRef, userPublic, { merge: true });
-}
-export async function updateUserInfo(userInfo: UserInfo): Promise<void> {
-	const currentUser = get(userAuthStore);
-	if (!currentUser) throw new Error('User not authenticated');
-	try {
-		if (userInfo.email) await updateEmail(currentUser, userInfo.email);
-		//need to add phone number support
-		if (userInfo.photoURL) await updateProfile(currentUser, { photoURL: userInfo.photoURL });
-		if (userInfo.displayName)
-			await updateProfile(currentUser, { displayName: userInfo.displayName });
-	} catch (error) {
-		console.error('Error updating user auth fields:', error);
-	}
 }

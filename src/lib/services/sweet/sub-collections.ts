@@ -38,22 +38,22 @@ export async function removeDao(
 export async function addToSubCollection(
 	sweetId: string,
 	subCollectionName: SWEETS_SUBCOLLECTION,
-	userId: string
+	uid: string
   ): Promise<void> {
 	return handleFirestoreError(async () => {
 	  const subCollectionRef = getSubCollectionRef(sweetId, subCollectionName);
-	  await addDoc(subCollectionRef, { userId: userId });
+	  await addDoc(subCollectionRef, { uid: uid });
 	});
   }
   
   export async function isUserInSubCollection(
 	sweetId: string,
 	subCollectionName: SWEETS_SUBCOLLECTION,
-	userId: string
+	uid: string
   ): Promise<string | null> {
 	return handleFirestoreError(async () => {
 	  const subCollectionRef = getSubCollectionRef(sweetId, subCollectionName);
-	  const q = query(subCollectionRef, where('userId', '==', userId));
+	  const q = query(subCollectionRef, where('uid', '==', uid));
 	  const querySnapshot = await getDocs(q);
 	  
 	  if (!querySnapshot.empty) {
@@ -67,15 +67,15 @@ export async function addToSubCollection(
   export async function removeFromSubCollection(
 	sweetId: string,
 	subCollectionName: SWEETS_SUBCOLLECTION,
-	userId: string
+	uid: string
   ): Promise<void> {
 	return handleFirestoreError(async () => {
-	  const docId = await isUserInSubCollection(sweetId, subCollectionName, userId);
+	  const docId = await isUserInSubCollection(sweetId, subCollectionName, uid);
 	  
 	  if (docId) {
 		await removeDao(sweetId, subCollectionName, docId);
 	  } else {
-		console.log(`No document found for userId: ${userId}`);
+		console.log(`No document found for uid: ${uid}`);
 	  }
 	});
   }

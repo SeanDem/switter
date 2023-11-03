@@ -41,8 +41,8 @@ service cloud.firestore {
       // Any authenticated user can read comments
       allow read: if true;
       // Users can only create, update, or delete their own comments
-      allow create: if request.auth != null && request.resource.data.userUid == request.auth.uid;
-      allow update, delete: if request.auth != null && resource.data.userUid == request.auth.uid;
+      allow create: if request.auth != null && request.resource.data.uid == request.auth.uid;
+      allow update, delete: if request.auth != null && resource.data.uid == request.auth.uid;
     }
   }
 }

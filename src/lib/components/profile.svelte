@@ -1,74 +1,76 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { updateUserProfile } from '$lib/services/user/facade';
 	import { userAuthStore } from '$lib/store/store';
-	import type { UserProfileAndInfo } from '$lib/types/types';
-	import { signOut } from 'firebase/auth';
-	import { auth } from '$lib/services/firebase';
+	import type { UserProf } from '$lib/types/types';
 
-	export let userProfileAndInfo: Partial<UserProfileAndInfo> = {};
+	export let userProfile: UserProf = {
+		uid: '',
+		profileUrl: '',
+		bio: '',
+		birthday: '',
+		followersCount: 0,
+		followingCount: 0,
+		email: undefined
+	};
 
-	const handleFileChange = (event: Event) => {
+	const onHandleFileChange = (event: Event) => {
 		console.log('need to handle file change');
 	};
 
 	const submitProfile = () => {
 		if (!$userAuthStore) return;
-		if (!userProfileAndInfo.displayName || !userProfileAndInfo.handle) {
+		if (!userProfile.displayName || !userProfile.handle) {
 			alert('Name and handle are required.');
 			return;
 		}
-		duplicateFields();
+		updateUserProfile(userProfile);
+		goto('/');
 	};
-	const duplicateFields = () => {
-		userProfileAndInfo.userDisplayName = userProfileAndInfo.displayName ?? '';
-		userProfileAndInfo.userProfileUrl = userProfileAndInfo.handle;
-		userProfileAndInfo.userUid = userProfileAndInfo.userUid;
-	};
-
 	const onSignout = () => {
-		document.cookie = 'userAuth=;';
-		signOut(auth);
+		document.cookie = 'uid=;';
 	};
 </script>
 
 <div>
-	Profile information
-	<br />
 	<div>
-		<span>Following: {userProfileAndInfo.followingCount ?? 0}</span>
-		<span> Followers: {userProfileAndInfo.followingCount ?? 0}<span /></span>
+		Profile information
+		<br />
+		<span>Following: {userProfile.followingCount ?? 0}</span>
+		<span> Followers: {userProfile.followingCount ?? 0}<span /></span>
 	</div>
 	<label>
-		Name: <input type="text" bind:value={userProfileAndInfo.displayName} required />
+		Name: <input type="text" bind:value={userProfile.displayName} required />
 	</label>
 	<br />
 
 	<label>
-		Handle: @ <input type="text" bind:value={userProfileAndInfo.handle} required />
+		Handle: @ <input type="text" bind:value={userProfile.handle} required />
 	</label>
 	<br />
 
 	<label>
-		Email: <input type="text" bind:value={userProfileAndInfo.email} required />
+		Email: <input type="text" bind:value={userProfile.email} required />
 	</label>
 	<br />
 
 	<label>
-		Phone Number: <input type="text" bind:value={userProfileAndInfo.phoneNumber} />
+		Phone Number: <input type="text" bind:value={userProfile.phoneNumber} />
 	</label>
 	<br />
 
 	<label>
-		Birthday: <input type="date" bind:value={userProfileAndInfo.birthday} />
+		Birthday: <input type="date" bind:value={userProfile.birthday} />
 	</label>
 	<br />
 
 	<label>
-		Bio: <input type="text" bind:value={userProfileAndInfo.bio} />
+		Bio: <input type="text" bind:value={userProfile.bio} />
 	</label>
 	<br />
 
 	<label>
-		Profile Picture: <input type="file" on:change={handleFileChange} />
+		Profile Picture: <input type="file" on:change={onHandleFileChange} />
 	</label>
 	<br />
 

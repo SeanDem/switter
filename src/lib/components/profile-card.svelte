@@ -1,19 +1,18 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import type { UserProfile } from '$lib/types/types';
 	import { page } from '$app/stores';
-	export let user: UserProfile;
+	import type { UserProf } from '$lib/types/types';
+	export let user: UserProf;
 
 	function onCardClick() {
-		if ($page.route){
-
+		if ($page.route) {
 		}
-		goto(`/profile/${user.userUid}`);
+		goto(`/profile/${user.uid}`);
 	}
 
-	function follow() {
-		console.log('Follow button clicked for user:', user.userUid);
-	}
+	const onFollow = () => {
+		console.log('Follow button clicked for user:', user.uid);
+	};
 
 	function message() {
 		console.log('message button');
@@ -21,9 +20,9 @@
 </script>
 
 <div role="button" tabindex="0" on:click={onCardClick} on:keydown={() => {}}>
-	<img src={user.userProfileUrl} alt="{user.userDisplayName}'s profile picture" />
-	<div>{user.userDisplayName ?? ''}</div>
+	<img src={user.handle} alt="{user.displayName}'s profile picture" />
+	<div>{user.displayName ?? ''}</div>
 	<div>@{user.handle ?? ''}</div>
 	<div>{user.bio ?? ''}</div>
-	<button on:click|stopPropagation={follow}>Follow</button>
+	<button on:click|stopPropagation={onFollow}>Follow</button>
 </div>

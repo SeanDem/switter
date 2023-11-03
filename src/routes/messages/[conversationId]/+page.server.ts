@@ -4,12 +4,13 @@ import {
 import { getUserProfileByUid } from '$lib/services/user/profile.js';
 
 export const load = async ({ params, cookies }) => {
-	const userUid = cookies.get('userUid') ?? '';
-	const conversation = await getConversationById(params.conversationId);
+	const uid = cookies.get('uid') ?? '';
+	let conversation = await getConversationById(params.conversationId);
 	const otherUserUid =
-		conversation.userId1 !== userUid
+		conversation.userId1 !== uid
 			? conversation.userId1
 			: conversation.userId2;
-	const otherUserProfile = await getUserProfileByUid(otherUserUid);
-	return { otherUserProfile }
+	const otherUserProf= await getUserProfileByUid(otherUserUid);
+
+	return { otherUserProf }
 };

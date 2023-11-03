@@ -1,16 +1,10 @@
 <script lang="ts">
-	import { formatDateSmall } from '$lib/utils/data';
-	import type { SweetDetail, Sweet } from '$lib/types/types';
-	import ActionBar from './action-bar.svelte';
 	import { goto } from '$app/navigation';
-	import { page } from '$app/stores';
+	import type { SweetDetail } from '$lib/types/types';
+	import { formatDateSmall } from '$lib/utils/data';
+	import ActionBar from './action-bar.svelte';
 
 	export let sweetDetail: SweetDetail;
-
-	const onTweetClicked = (): void => {
-		const sweetId = sweetDetail.sweet.id;
-		if ($page.params.sweet !== sweetId) goto(`/sweet/${sweetId}`);
-	};
 </script>
 
 <div class="shadow-md w-96 bg-theme-bg rounded p-4">
@@ -19,10 +13,10 @@
 		role="button"
 		tabindex="0"
 		on:keydown={() => {}}
-		on:click={() => onTweetClicked()}
+		on:click={() => goto(`/sweet/${sweetDetail.sweet.id}`)}
 	>
 		<div class="flex items-center mb-2">
-			<span class="font-bold text-theme-text">{sweetDetail.user.userDisplayName}</span>
+			<span class="font-bold text-theme-text">{sweetDetail.user.displayName}</span>
 			<span class="text-theme-secondary ml-2">@{sweetDetail.user.handle}</span>
 			<span class="text-gray-500 ml-2">{formatDateSmall(sweetDetail.sweet.timestamp)}</span>
 		</div>

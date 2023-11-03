@@ -3,7 +3,7 @@
 	import type { Conversation } from '$lib/types/types';
 	import { formatDateSmall } from '$lib/utils/data';
 	export let data: { conversationList: Conversation[] };
-	const conversationList = data.conversationList;
+	$: conversationList = data.conversationList;
 </script>
 
 {#if conversationList}
@@ -14,7 +14,7 @@
 			on:click={() => goto(`/messages/${conversation.id}`)}
 			on:keydown={() => {}}
 		>
-			<span>{conversation.lastMessage}----</span>
+			<span>{conversation.lastMessage}</span>
 			<span>{formatDateSmall(conversation.lastTimestamp)}</span>
 		</div>
 	{/each}

@@ -2,24 +2,20 @@
 	import { page } from '$app/stores';
 	import { addNewMessage, listenToMessagesByConversationId } from '$lib/services/messages';
 	import { userProfileStore } from '$lib/store/store';
-	import type { Message, UserProfile } from '$lib/types/types';
+	import type { Message, UserProf } from '$lib/types/types';
 	import { onDestroy, onMount } from 'svelte';
-	export let data: { otherUserProfile: UserProfile; messageList: Message[] };
 
 	let unsubscribeFromMessages: (() => void) | undefined;
-	let messageText: string;
+	let messageText: string = '';
 	let messageList: Message[] = [];
-	const userProfile: UserProfile | null = $userProfileStore;
-	const otherUserProfile: UserProfile = data.otherUserProfile;
-
-	const onSend = async () => {
-		if (userProfile && messageText) {
-			await addNewMessage($page.params.conversationId, {
-				text: messageText,
-				senderUid: userProfile.userUid
-			});
-			messageText = '';
-		}
+	const userProfile: UserProf | null = $userProfileStore;
+	export let otherUserProfile: UserProf = {
+		uid: '',
+		profileUrl: '',
+		bio: '',
+		birthday: '',
+		followersCount: 0,
+		followingCount: 0
 	};
 
 	onMount(() => {
@@ -32,13 +28,25 @@
 	onDestroy(() => {
 		unsubscribeFromMessages?.();
 	});
+
+	const onSend = async (event: Event) => {
+		event.preventDefault();
+		if (userProfile && messageText) {
+			await addNewMessage($page.params.conversationId, {
+				text: messageText,
+				uid: userProfile.uid
+			});
+			messageText = '';
+		}
+	};
 </script>
 
-<div>Messages with: {otherUserProfile?.userDisplayName}</div>
+<div>Messages with: {otherUserProfile?.displayName}</div>
 
 {#each messageList as message}
 	<div>{message.text}</div>
 {/each}
+
 <form on:submit={onSend}>
 	<input type="text" bind:value={messageText} />
 	<button type="submit">Send</button>

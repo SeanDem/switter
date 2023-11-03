@@ -27,18 +27,18 @@ export const getMessageDoc = (messageId: string) => doc(db, 'messages', messageI
 export const getMessageSubCollection = (conversationId: string) =>
 	collection(getMessageDoc(conversationId), 'messages');
 
-export const getOrCreateConversationIdByUserID = async (userUid: string): Promise<string> => {
+export const getOrCreateConversationIdByUserID = async (uid: string): Promise<string> => {
 	return handleFirestoreError(async () => {
 		const currentUserUid = get(userAuthStore)?.uid;
 
 		const q1 = query(
 			messagesCollection,
 			where('userId1', '==', currentUserUid),
-			where('userId2', '==', userUid)
+			where('userId2', '==', uid)
 		);
 		const q2 = query(
 			messagesCollection,
-			where('userId2', '==', userUid),
+			where('userId2', '==', uid),
 			where('userId1', '==', currentUserUid)
 		);
 		const [snap1, snap2] = await Promise.all([getDocs(q1), getDocs(q2)]);
@@ -49,7 +49,7 @@ export const getOrCreateConversationIdByUserID = async (userUid: string): Promis
 		}
 		const conversation: Conversation = {
 			userId1: currentUserUid ?? '',
-			userId2: userUid,
+			userId2: uid,
 			lastMessage: 'new convo temp',
 			lastTimestamp: serverTimestamp()
 		};
@@ -75,7 +75,7 @@ export const updateLastMessage = async (
 ): Promise<void> => {
 	return handleFirestoreError(async () => {
 		const conversationRef = doc(messagesCollection, conversationId);
-		await updateDoc(conversationRef, { lastMessage, timestamp: serverTimestamp() });
+		await updateDoc(conversationRef, { lastMessage, lastTimestamp: serverTimestamp() });
 	});
 };
 
@@ -94,12 +94,12 @@ export const deleteConversation = async (conversationId: string): Promise<void> 
 	});
 };
 
-export const getConversationsForUser = async (userUid: string): Promise<Conversation[]> => {
+export const getConversationsForUser = async (uid: string): Promise<Conversation[]> => {
 	return handleFirestoreError(async () => {
-		const q1 = query(messagesCollection, where('userId1', '==', userUid));
-		const q2 = query(messagesCollection, where('userId2', '==', userUid));
+		const q1 = query(messagesCollection, where('userId1', '==', uid));
+		const q2 = query(messagesCollection, where('userId2', '==', uid));
 
-		const [snap1, snap2] = await Promise.all([getDocs(q1), getDocs(q2)]);
+		const [snap1] = await Promise.all([getDocs(q1), getDocs(q2)]);
 		const conv1 = snap1.docs.map(
 			(doc) =>
 				({

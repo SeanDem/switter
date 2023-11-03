@@ -4,7 +4,7 @@ import type { FieldValue } from 'firebase/firestore';
 
 export interface UserAction {
 	id?: string;
-	userUid: string;
+	uid: string;
 	timestamp: Timestamp | FieldValue;
 }
 
@@ -25,7 +25,7 @@ export interface Sweet extends UserAction {
 
 export interface SweetDetail {
 	sweet: Sweet;
-	user: UserProfile;
+	user: UserProf;
 	comments: SweetDetail[];
 	isLiked: boolean;
 	isReSweeted: boolean;
@@ -45,26 +45,26 @@ export interface Conversation {
 
 export interface Message {
 	id: string;
-	senderUid: string;
+	uid: string;
 	text: string;
 	timestamp: Timestamp | FieldValue;
 }
 
-export interface UserProfile {
-	userUid: string;
-	userDisplayName: string;
-	userProfileUrl: string;
-	handle: string;
+export interface UserProf {
+	uid: string;
+	displayName?: string;
+	profileUrl: string;
+	handle?: string;
 	bio: string;
 	birthday: string;
+	email?: string;
+	phoneNumber?: number;
 	followersCount: number;
 	followingCount: number;
 }
 
-export interface UserProfileAndInfo extends UserProfile, UserInfo {}
-
 export interface UserPrivate {
-	userUid: string;
+	uid: string;
 	settings?: string;
 }
 

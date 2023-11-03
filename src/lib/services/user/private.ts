@@ -16,8 +16,8 @@ export async function addUserPrivate(userInfo: UserPrivate): Promise<void> {
 export async function upsertUserPrivate(userInfo: UserPrivate): Promise<void> {
 	return handleFirestoreError(async () => {
 		isUserAuth();
-		if (!userInfo.userUid) throw new Error('Missing UID in user info');
-		const userDocRef = doc(userPrivateCollection, userInfo.userUid);
+		if (!userInfo.uid) throw new Error('Missing UID in user info');
+		const userDocRef = doc(userPrivateCollection, userInfo.uid);
 		await setDoc(userDocRef, userInfo, { merge: true });
 	});
 }

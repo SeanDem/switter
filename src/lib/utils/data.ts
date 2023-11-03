@@ -36,3 +36,20 @@ export function formatDateLarge(timestamp: Timestamp | FieldValue | undefined) {
 	}
 	return '';
 }
+
+function serializeTimestamp(timestamp : Timestamp) {
+    return {
+        seconds: timestamp.seconds,
+        nanoseconds: timestamp.nanoseconds
+    };
+}
+export function mapToSerializableTimestamp<T>(list: T[], getter: (item: T) => { property: keyof T, value: Timestamp }): T[] {
+    return list.map(item => {
+        const { property, value: timestamp } = getter(item);
+        if (timestamp instanceof Timestamp) {
+            const serializedTimestamp = serializeTimestamp(timestamp);
+            return { ...item, [property]: serializedTimestamp } as T;
+        }
+        return item;
+    });
+}

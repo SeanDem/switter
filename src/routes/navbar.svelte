@@ -12,11 +12,11 @@
 	}
 	function gotoProfile() {
 		const userProfileData = get(userProfileStore);
-		goto(`/profile/${userProfileData?.userUid}`);
+		goto(`/profile/${userProfileData?.uid}`);
 	}
 </script>
 
-<nav class="sidebar">
+<nav>
 	<a href="/" class={active === '' ? 'active' : ''}>Home</a>
 	<a href="/search" class={active === 'search' ? 'active' : ''}>Search</a>
 	<a href="/messages" class={active === 'messages' ? 'active' : ''}>Messages</a>

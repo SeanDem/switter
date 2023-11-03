@@ -1,45 +1,46 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { get } from 'svelte/store';
-	import { userProfileStore } from '$lib/store/store';
-	import { getOrCreateConversationIdByUserID } from '$lib/services/messages';
-	import SweetCard from '$lib/components/sweet-card.svelte';
-	import { onMount } from 'svelte';
-	import { getUserProfileByUid } from '$lib/services/user/profile';
-	import { getAllSweetDetail } from '$lib/services/sweet/sweet';
-	import { SweetType, type SweetDetail, type UserProfile } from '$lib/types/types';
 	import { page } from '$app/stores';
+	import SweetCard from '$lib/components/sweet-card.svelte';
+	import { getOrCreateConversationIdByUserID } from '$lib/services/messages';
+	import { getAllSweetDetail } from '$lib/services/sweet/sweet';
+	import { getUserProfileByUid } from '$lib/services/user/profile';
+	import { userProfileStore } from '$lib/store/store';
+	import { SweetType, type SweetDetail, type UserProf } from '$lib/types/types';
+	import { onMount } from 'svelte';
+	import { get } from 'svelte/store';
 
-	let userProfile: UserProfile;
+	let userProfPage: UserProf;
 	let sweetDetailList: SweetDetail[];
-	let userUid: string;
+	let uid: string;
 
 	let isLoading = true;
 	onMount(async () => {
-		userUid = get(userProfileStore)?.userUid ?? '';
+		uid = get(userProfileStore)?.uid ?? '';
 
-		userProfile = await getUserProfileByUid($page.params.profile);
+		userProfPage = await getUserProfileByUid($page.params.profile);
 		sweetDetailList = await getAllSweetDetail({
 			sweetType: SweetType.SWEET,
-			userUid: userUid
+			uid: uid
 		});
 
 		isLoading = false;
 	});
 
 	function isProfilePage() {
-		return userUid === userProfile.userUid;
+		return uid === userProfPage.uid;
 	}
 
 	const onSettingsClicked = (): void => {
-		goto(`${userProfile.userUid}/settings`);
+		goto(`${uid}/settings`);
 	};
 
 	function onFollow() {
-		goto(`/messages/${userProfile.userUid}`);
+		console.log('follow');
 	}
+
 	async function onMessage() {
-		const conversationId = await getOrCreateConversationIdByUserID(userProfile.userUid);
+		const conversationId = await getOrCreateConversationIdByUserID(userProfPage.uid);
 		goto(`/messages/${conversationId}`);
 	}
 </script>

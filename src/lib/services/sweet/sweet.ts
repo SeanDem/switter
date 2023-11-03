@@ -1,4 +1,4 @@
-import { SweetType, type Sweet, type SweetDetail, type UserProfile } from '$lib/types/types';
+import { SweetType, type Sweet, type SweetDetail, type UserProf } from '$lib/types/types';
 import { serverTimestamp } from '@firebase/firestore';
 import {
 	Query,
@@ -22,7 +22,7 @@ import { sweetsCollection } from './collection';
 export type SweetOptions = {
 	sweetType: SweetType;
 	refSweetId?: string;
-	userUid?: string;
+	uid?: string;
 };
 
 export async function getSweetById(sweetId: string): Promise<Sweet> {
@@ -41,12 +41,12 @@ export async function getSweetDetail(sweetId: string): Promise<SweetDetail> {
 		const sweet = await getSweetById(sweetId);
 		if (!sweet) return null;
 
-		const q = query(userProfileCollection, where('userUid', '==', sweet.userUid));
+		const q = query(userProfileCollection, where('uid', '==', sweet.uid));
 		const usersSnapshot = await getDocs(q);
 
-		let user: UserProfile | null = null;
+		let user: UserProf | null = null;
 		usersSnapshot.forEach((doc) => {
-			user = doc.data() as UserProfile;
+			user = doc.data() as UserProf;
 		});
 
 		return { sweet, user };
@@ -72,30 +72,29 @@ export async function deleteSweetById(tweetId: string): Promise<void> {
 export async function getAllSweetDetail(options: SweetOptions): Promise<SweetDetail[]> {
 	return handleFirestoreError(async () => {
 		const sweets = await getSweetList(options);
-		const userUids = [...new Set(sweets.map((sweet) => sweet.userUid))];
+		const userUids = [...new Set(sweets.map((sweet) => sweet.uid))];
 		if (userUids.length === 0) return [];
 
 		const users = await fetchUsersByUids(userUids);
-
 		return sweets
 			.map((sweet) => {
-				const user = users[sweet.userUid];
+				const user = users[sweet.uid];
 				return user ? { sweet, user } : null;
 			})
 			.filter(Boolean);
 	});
 }
 
-async function fetchUsersByUids(userUids: string[]): Promise<{ [key: string]: UserProfile }> {
-	const users: { [key: string]: UserProfile } = {};
+async function fetchUsersByUids(userUids: string[]): Promise<{ [key: string]: UserProf }> {
+	const users: { [key: string]: UserProf } = {};
 	const batchSize = 10;
 
 	for (let i = 0; i < userUids.length; i += batchSize) {
 		const userUidsBatch = userUids.slice(i, i + batchSize);
-		const q = query(userProfileCollection, where('userUid', 'in', userUidsBatch));
+		const q = query(userProfileCollection, where('uid', 'in', userUidsBatch));
 		const usersSnapshot = await getDocs(q);
 		usersSnapshot.forEach((doc) => {
-			users[doc.id] = doc.data() as UserProfile;
+			users[doc.id] = doc.data() as UserProf;
 		});
 	}
 
@@ -109,7 +108,7 @@ export async function createSweet(options: SweetOptions, text: string): Promise<
 	let sweet: Sweet = {
 		text,
 		type: options.sweetType,
-		userUid: currentUser.userUid,
+		uid: currentUser.uid,
 		timestamp: serverTimestamp(),
 		likesCount: 0,
 		commentsCount: 0,
@@ -121,8 +120,8 @@ export async function createSweet(options: SweetOptions, text: string): Promise<
 		sweet.refSweetId = options.refSweetId;
 	}
 
-	if (options.userUid) {
-		sweet.userUid = options.userUid;
+	if (options.uid) {
+		sweet.uid = options.uid;
 	}
 
 	return handleFirestoreError(async () => {
@@ -142,8 +141,8 @@ function buildSweetQuery(options: SweetOptions): Query {
 		q = query(q, where('refSweetId', '==', options.refSweetId));
 	}
 
-	if (options.userUid) {
-		q = query(q, where('userUid', '==', options.userUid));
+	if (options.uid) {
+		q = query(q, where('uid', '==', options.uid));
 	}
 
 	return query(q, orderBy('timestamp', 'desc'));

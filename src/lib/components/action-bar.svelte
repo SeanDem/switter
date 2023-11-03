@@ -20,39 +20,37 @@
 	let isLiked = writable(false);
 	let isRetweeted = writable(false);
 	let isCommented = writable(false);
+
 	onMount(async () => {
 		const likedRes = await isUserInSubCollection(
 			sweetDetail.sweet.id ?? '',
 			SWEETS_SUBCOLLECTION.LIKERS,
-			userProfileData?.userUid ?? ''
+			userProfileData?.uid ?? ''
 		);
 		isLiked.set(!!likedRes);
 
 		const resweetedRes = await isUserInSubCollection(
 			sweetDetail.sweet.id ?? '',
 			SWEETS_SUBCOLLECTION.RETWEETERS,
-			userProfileData?.userUid ?? ''
+			userProfileData?.uid ?? ''
 		);
 		isRetweeted.set(!!resweetedRes);
 
 		const commentedRes = await isUserInSubCollection(
 			sweetDetail.sweet.id ?? '',
 			SWEETS_SUBCOLLECTION.COMMENTERS,
-			userProfileData?.userUid ?? ''
+			userProfileData?.uid ?? ''
 		);
 		isCommented.set(!!commentedRes);
 	});
 	function onComment(event: CustomEvent<any>) {
 		sweetDetail.sweet.commentsCount += 1;
-		createSweet(
-			{ sweetType: SweetType.COMMENT, userUid: userProfileData?.userUid },
-			event.detail.text
-		);
+		createSweet({ sweetType: SweetType.COMMENT, uid: userProfileData?.uid, refSweetId: sweetDetail.sweet.id }, event.detail.text);
 		incrementSweetProperty(sweetDetail.sweet.id ?? '', 'commentsCount');
 		addToSubCollection(
 			sweetDetail.sweet.id ?? '',
 			SWEETS_SUBCOLLECTION.COMMENTERS,
-			userProfileData?.userUid ?? ''
+			userProfileData?.uid ?? ''
 		);
 	}
 
@@ -73,7 +71,7 @@
 		addToSubCollection(
 			sweetDetail.sweet.id ?? '',
 			SWEETS_SUBCOLLECTION.RETWEETERS,
-			userProfileData?.userUid ?? ''
+			userProfileData?.uid ?? ''
 		);
 	}
 	function unResweet() {
@@ -82,10 +80,10 @@
 		removeFromSubCollection(
 			sweetDetail.sweet.id ?? '',
 			SWEETS_SUBCOLLECTION.RETWEETERS,
-			userProfileData?.userUid ?? ''
+			userProfileData?.uid ?? ''
 		);
 		getAndDeleteSweet({
-			userUid: userProfileData?.userUid,
+			uid: userProfileData?.uid,
 			refSweetId: sweetDetail.sweet.id,
 			sweetType: SweetType.RE_SWEET
 		});
@@ -107,7 +105,7 @@
 		addToSubCollection(
 			sweetDetail.sweet.id ?? '',
 			SWEETS_SUBCOLLECTION.LIKERS,
-			userProfileData?.userUid ?? ''
+			userProfileData?.uid ?? ''
 		);
 	}
 	function unLike() {
@@ -116,7 +114,7 @@
 		removeFromSubCollection(
 			sweetDetail.sweet.id ?? '',
 			SWEETS_SUBCOLLECTION.LIKERS,
-			userProfileData?.userUid ?? ''
+			userProfileData?.uid ?? ''
 		);
 	}
 </script>

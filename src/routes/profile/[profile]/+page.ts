@@ -1,14 +1,12 @@
-import { getUserProfileByUid } from '$lib/services/user/profile';
 import { getAllSweetDetail } from '$lib/services/sweet/sweet';
+import { getUserProfileByUid } from '$lib/services/user/profile';
 import { SweetType } from '$lib/types/types';
-import { get } from 'svelte/store';
-import { userAuthStore } from '$lib/store/store';
 
 export const load = async ({ params }) => {
 	const userProfile = await getUserProfileByUid(params.profile);
 	const sweetDetailList = await getAllSweetDetail({
 		sweetType: SweetType.SWEET,
-		userUid: userProfile.userUid
+		uid: userProfile.uid
 	});
 	return { profile: params.profile };
 };
