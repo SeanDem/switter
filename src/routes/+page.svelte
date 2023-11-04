@@ -3,13 +3,9 @@
 	import type { SweetDetail } from '$lib/types/types';
 
 	export let data: { sweetDetailList: SweetDetail[] };
-	$ : data.sweetDetailList
+	$: sweetDetailList = data.sweetDetailList;
 </script>
 
-{#if data}
-	{#each data.sweetDetailList as sweetDetail}
-		<SweetCard {sweetDetail} />
-	{/each}
-{:else}
-	<div>Loading...</div>
-{/if}
+{#each sweetDetailList as sweetDetail}
+	<SweetCard {sweetDetail} />
+{/each}

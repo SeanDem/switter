@@ -4,13 +4,13 @@
 	import { getOrCreateConversationIdByUserID } from '$lib/services/messages';
 	import type { SweetDetail, UserProf } from '$lib/types/types';
 
-	export let data: { userProf: UserProf; sweetDetailList: SweetDetail[]; uid: string };
-	$: userProfile = data.userProf;
+	export let data: { userProfile: UserProf; sweetDetailList: SweetDetail[]; uid: string };
+	$: userProfile = data.userProfile;
 	$: sweetDetailList = data.sweetDetailList;
 	$: uid = data.uid;
 
 	function isProfilePage() {
-		return uid === userProfile.uid;
+		return userProfile.uid === uid;
 	}
 
 	const onSettingsClicked = (): void => {
@@ -34,10 +34,8 @@
 	<button on:click={onFollow}>Follow</button>
 {/if}
 
-{#if sweetDetailList && sweetDetailList.length > 0}
-	{#each sweetDetailList as sweetDetail (sweetDetail.sweet.id)}
+{#if sweetDetailList}
+	{#each sweetDetailList as sweetDetail}
 		<SweetCard {sweetDetail} />
 	{/each}
-{:else}
-	<div>No sweets available</div>
 {/if}

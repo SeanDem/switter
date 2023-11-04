@@ -40,6 +40,11 @@ export async function addToSubCollection(
 	subCollectionName: SWEETS_SUBCOLLECTION,
 	uid: string
   ): Promise<void> {
+	console.log('addToSubCollection');
+	console.log("sweetId " +sweetId);
+	console.log("subCollectionName " +subCollectionName);
+	console.log("uid " +uid);
+
 	return handleFirestoreError(async () => {
 	  const subCollectionRef = getSubCollectionRef(sweetId, subCollectionName);
 	  await addDoc(subCollectionRef, { uid: uid });
