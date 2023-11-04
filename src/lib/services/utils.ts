@@ -1,6 +1,6 @@
 import { where } from '@firebase/firestore';
 import { auth } from '$lib/services/firebase';
-import { query, type QuerySnapshot } from 'firebase/firestore';
+import { query, Timestamp, type QuerySnapshot } from 'firebase/firestore';
 
 export function handleFirestoreError(callback: () => Promise<any>): Promise<any> {
 	try {
@@ -47,4 +47,14 @@ export function ensureSnapshotIsNotEmpty(snapshot: QuerySnapshot, errorMessage: 
 
 export function mapSnapshotToData<T>(snapshot: QuerySnapshot): T[] {
 	return snapshot.docs.map((doc) => doc.data() as T);
+}
+
+export function timestampToDate(timestamp: any): Date {
+	if (timestamp instanceof Date) {
+		return timestamp;
+	}
+	if (timestamp instanceof Timestamp) {
+		return timestamp.toDate();
+	}
+	throw new Error('Invalid timestamp');
 }

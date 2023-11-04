@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import type { SweetDetail } from '$lib/types/types';
-	import { formatDateLarge } from '$lib/utils/data';
+	import { formatDateSmall } from '$lib/utils/data';
 	import ActionsBar from './action-bar.svelte';
 
 	export let commentDetail: SweetDetail;
 </script>
 
 <div class="shadow-md w-96 bg-theme-bg rounded p-4">
-	<a href="/sweet/{commentDetail.sweet.id}"> {commentDetail.sweet.id}</a>
 	<div
 		class="cursor-pointer hover:bg-gray-200"
 		role="button"
@@ -19,7 +18,7 @@
 		<div class="flex items-center mb-2">
 			<span class="font-bold text-theme-text">{commentDetail.user.displayName}</span>
 			<span class="text-theme-secondary ml-2">@{commentDetail.user.handle}</span>
-			<span class="text-gray-500 ml-2">{formatDateLarge(commentDetail.sweet.timestamp)}</span>
+			<span class="text-gray-500 ml-2">{formatDateSmall(commentDetail.sweet.timestamp)}</span>
 		</div>
 
 		<p class="text-theme-text">{commentDetail.sweet.text}</p>

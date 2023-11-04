@@ -13,7 +13,7 @@ import {
 import { db } from '$lib/services/firebase';
 import { sweetsCollection } from './collection';
 import { handleFirestoreError } from '../utils';
-import type { SWEETS_SUBCOLLECTION } from '$lib/types/types';
+import { SWEETS_SUBCOLLECTION, type Sweet, type SweetDetail } from '$lib/types/types';
 
 export const getSweetDoc = (sweetId: string) => doc(db, 'sweets', sweetId);
 function getSubCollectionRef(
@@ -78,4 +78,24 @@ export async function addToSubCollection(
 		console.log(`No document found for uid: ${uid}`);
 	  }
 	});
+  }
+
+
+export async function checkUserInteractions(comments: SweetDetail[], uid: string): Promise<SweetDetail[]> {
+	const checkInteractionsPromises = comments.map(async (comment): Promise<SweetDetail> => {
+	  const [isLiked, isReSweeted, isCommented] = await Promise.all([
+		isUserInSubCollection(comment.sweet.id ?? '', SWEETS_SUBCOLLECTION.LIKERS, uid),
+		isUserInSubCollection(comment.sweet.id ?? '', SWEETS_SUBCOLLECTION.RETWEETERS, uid),
+		isUserInSubCollection(comment.sweet.id ?? '', SWEETS_SUBCOLLECTION.COMMENTERS, uid),
+	  ]);
+  
+	  return {
+		...comment,
+		isLiked: !!isLiked,
+		isReSweeted: !!isReSweeted,
+		isCommented: !!isCommented,
+	  };
+	});
+  
+	return Promise.all(checkInteractionsPromises);
   }

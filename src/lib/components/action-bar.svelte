@@ -3,64 +3,47 @@
 		decrementSweetProperty,
 		incrementSweetProperty
 	} from '$lib/services/sweet/increment-decrement';
-	import {
-		addToSubCollection,
-		isUserInSubCollection,
-		removeFromSubCollection
-	} from '$lib/services/sweet/sub-collections';
+	import { addToSubCollection, removeFromSubCollection } from '$lib/services/sweet/sub-collections';
 	import { createSweet, getAndDeleteSweet } from '$lib/services/sweet/sweet';
 	import { userProfileStore } from '$lib/store/store';
 	import { SWEETS_SUBCOLLECTION, SweetType, type SweetDetail } from '$lib/types/types';
-	import { onMount } from 'svelte';
-	import { get, writable } from 'svelte/store';
+	import { get } from 'svelte/store';
 	import Post from './post.svelte';
 
 	export let sweetDetail: SweetDetail;
 	const userProfileData = get(userProfileStore);
-	let isLiked = writable(false);
-	let isRetweeted = writable(false);
-	let isCommented = writable(false);
 
-	onMount(async () => {
-		const likedRes = await isUserInSubCollection(
-			sweetDetail.sweet.id ?? '',
-			SWEETS_SUBCOLLECTION.LIKERS,
-			userProfileData?.uid ?? ''
-		);
-		isLiked.set(!!likedRes);
-
-		const resweetedRes = await isUserInSubCollection(
-			sweetDetail.sweet.id ?? '',
-			SWEETS_SUBCOLLECTION.RETWEETERS,
-			userProfileData?.uid ?? ''
-		);
-		isRetweeted.set(!!resweetedRes);
-
-		const commentedRes = await isUserInSubCollection(
-			sweetDetail.sweet.id ?? '',
-			SWEETS_SUBCOLLECTION.COMMENTERS,
-			userProfileData?.uid ?? ''
-		);
-		isCommented.set(!!commentedRes);
-	});
 	function onComment(event: CustomEvent<any>) {
-		sweetDetail.sweet.commentsCount += 1;
-		createSweet({ sweetType: SweetType.COMMENT, uid: userProfileData?.uid, refSweetId: sweetDetail.sweet.id }, event.detail.text);
-		incrementSweetProperty(sweetDetail.sweet.id ?? '', 'commentsCount');
-		addToSubCollection(
-			sweetDetail.sweet.id ?? '',
-			SWEETS_SUBCOLLECTION.COMMENTERS,
-			userProfileData?.uid ?? ''
-		);
+		const previousComment = sweetDetail.isCommented;
+		sweetDetail.isCommented = !previousComment;
+		try {
+			sweetDetail.sweet.commentsCount += 1;
+			createSweet(
+				{
+					sweetType: SweetType.COMMENT,
+					uid: userProfileData?.uid,
+					refSweetId: sweetDetail.sweet.id
+				},
+				event.detail.text
+			);
+			incrementSweetProperty(sweetDetail.sweet.id ?? '', 'commentsCount');
+			addToSubCollection(
+				sweetDetail.sweet.id ?? '',
+				SWEETS_SUBCOLLECTION.COMMENTERS,
+				userProfileData?.uid ?? ''
+			);
+		} catch {
+			sweetDetail.isReSweeted = previousComment;
+		}
 	}
 
 	function onReSweet() {
-		const previousResweet = $isRetweeted;
-		isRetweeted.set(!previousResweet);
+		const previousResweet = sweetDetail.isReSweeted;
+		sweetDetail.isReSweeted = !previousResweet;
 		try {
 			previousResweet ? unResweet() : resweet();
 		} catch {
-			isRetweeted.set(previousResweet);
+			sweetDetail.isReSweeted = previousResweet;
 		}
 	}
 
@@ -74,6 +57,7 @@
 			userProfileData?.uid ?? ''
 		);
 	}
+
 	function unResweet() {
 		sweetDetail.sweet.retweetsCount -= 1;
 		decrementSweetProperty(sweetDetail.sweet.id ?? '', 'retweetsCount');
@@ -90,12 +74,12 @@
 	}
 
 	async function onLike() {
-		const previousIsLiked = $isLiked;
-		isLiked.set(!previousIsLiked);
+		const previousIsLiked = sweetDetail.isLiked;
+		sweetDetail.isLiked = !previousIsLiked;
 		try {
 			previousIsLiked ? unLike() : like();
 		} catch {
-			isLiked.set(previousIsLiked);
+			sweetDetail.isLiked = previousIsLiked;
 		}
 	}
 
@@ -123,8 +107,8 @@
 <div class="w-full flex justify-start">
 	<div
 		class="flex-grow text-center"
-		class:bg-green-400={$isCommented}
-		class:bg-red-400={!$isCommented}
+		class:bg-green-400={sweetDetail.isCommented}
+		class:bg-red-400={!sweetDetail.isCommented}
 	>
 		<Post
 			buttonName={`💬 ${sweetDetail.sweet.commentsCount ?? 0}`}
@@ -135,16 +119,16 @@
 	</div>
 	<button
 		class="flex-grow"
-		class:bg-green-400={$isRetweeted}
-		class:bg-red-400={!$isRetweeted}
+		class:bg-green-400={sweetDetail.isReSweeted}
+		class:bg-red-400={!sweetDetail.isReSweeted}
 		on:click={onReSweet}
 	>
 		🔁 {sweetDetail.sweet.retweetsCount ?? 0}
 	</button>
 	<button
 		class="flex-grow"
-		class:bg-green-400={$isLiked}
-		class:bg-red-400={!$isLiked}
+		class:bg-green-400={sweetDetail.isLiked}
+		class:bg-red-400={!sweetDetail.isLiked}
 		on:click={onLike}
 	>
 		👍 {sweetDetail.sweet.likesCount ?? 0}

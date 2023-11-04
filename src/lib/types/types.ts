@@ -1,11 +1,11 @@
 import type { Timestamp } from '@firebase/firestore';
-import type { UserInfo } from 'firebase/auth';
 import type { FieldValue } from 'firebase/firestore';
 
+type SweetTimestamp = Timestamp | FieldValue | Date
 export interface UserAction {
 	id?: string;
 	uid: string;
-	timestamp: Timestamp | FieldValue;
+	timestamp: SweetTimestamp;
 }
 
 export interface Counters {
@@ -31,6 +31,7 @@ export interface SweetDetail {
 	isReSweeted: boolean;
 	isCommented: boolean;
 }
+
 export interface SweetLike extends UserAction {
 	sweetId: string;
 }
@@ -40,14 +41,14 @@ export interface Conversation {
 	userId1: string;
 	userId2: string;
 	lastMessage: string;
-	lastTimestamp: Timestamp | FieldValue;
+	lastTimestamp: SweetTimestamp;
 }
 
 export interface Message {
 	id: string;
 	uid: string;
 	text: string;
-	timestamp: Timestamp | FieldValue;
+	timestamp: SweetTimestamp;
 }
 
 export interface UserProf {

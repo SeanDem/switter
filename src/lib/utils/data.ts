@@ -1,9 +1,12 @@
 import { FieldValue, Timestamp } from 'firebase/firestore';
 
-export function formatDateSmall(timestamp: Timestamp | FieldValue | undefined) {
+export function formatDateSmall(timestamp: Timestamp | FieldValue | Date) {
 	if (timestamp instanceof Timestamp) {
+		timestamp = timestamp.toDate();
+	} 
+	if (timestamp instanceof Date) {
 		const now = new Date();
-		const postDate = timestamp.toDate();
+		const postDate = timestamp
 		const diffInMs = now.getTime() - postDate.getTime();
 		const diffInSec = diffInMs / 1000;
 		const diffInMin = diffInSec / 60;
@@ -22,18 +25,21 @@ export function formatDateSmall(timestamp: Timestamp | FieldValue | undefined) {
 	return '';
 }
 
-export function formatDateLarge(timestamp: Timestamp | FieldValue | undefined) {
+export function formatDateLarge(timestamp: Timestamp | FieldValue | Date) {
 	if (timestamp instanceof Timestamp) {
-		const date = timestamp.toDate();
-
+		timestamp = timestamp.toDate();
+	} 
+	if (timestamp instanceof Date) {
+		console.log("formatting");
 		return new Intl.DateTimeFormat(navigator.language, {
 			month: 'short',
 			day: 'numeric',
 			hour: 'numeric',
 			minute: 'numeric',
 			hour12: true
-		}).format(date);
+		}).format(timestamp);
 	}
+	console.log("npt formatting");
 	return '';
 }
 

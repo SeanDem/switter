@@ -2,6 +2,7 @@ import { SweetType, type Sweet, type SweetDetail, type UserProf } from '$lib/typ
 import { serverTimestamp } from '@firebase/firestore';
 import {
 	Query,
+	Timestamp,
 	addDoc,
 	deleteDoc,
 	doc,
@@ -15,7 +16,7 @@ import {
 } from 'firebase/firestore';
 import { get } from 'svelte/store';
 import { userProfileCollection } from '../user/profile';
-import { handleFirestoreError, isUserAuth } from '../utils';
+import { handleFirestoreError, isUserAuth, timestampToDate } from '../utils';
 import { userProfileStore } from './../../store/store';
 import { sweetsCollection } from './collection';
 
@@ -49,6 +50,8 @@ export async function getSweetDetail(sweetId: string): Promise<SweetDetail> {
 			user = doc.data() as UserProf;
 		});
 
+		sweet.timestamp = timestampToDate(sweet.timestamp);
+
 		return { sweet, user };
 	});
 }
@@ -78,6 +81,7 @@ export async function getAllSweetDetail(options: SweetOptions): Promise<SweetDet
 		const users = await fetchUsersByUids(userUids);
 		return sweets
 			.map((sweet) => {
+				sweet.timestamp = timestampToDate(sweet.timestamp);
 				const user = users[sweet.uid];
 				return user ? { sweet, user } : null;
 			})
