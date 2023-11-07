@@ -23,10 +23,10 @@
 	}
 
 	const goToFollowers = () => {
-		const currentPath = $page.url.pathname;
+		goto(`/profile/${userProfile.uid}/followers`);
 	};
 	const goToFollowing = () => {
-		const currentPath = $page.url.pathname;
+		goto(`/profile/${userProfile.uid}/following`);
 	};
 </script>
 
@@ -37,10 +37,10 @@
 	<button on:click={onFollow}>Follow</button>
 {/if}
 
-<a href="/followers" on:click|preventDefault={goToFollowers}
-	>Followers {userProfile.followersCount}</a
+<a href="/following" on:click|preventDefault={goToFollowing}
+	>Following {userProfile.followingCount}</a
 >
-<a href="/followers" on:click|preventDefault={goToFollowing}
+<a href="/followers" on:click|preventDefault={goToFollowers}
 	>Followers {userProfile.followingCount}</a
 >
 <slot />
