@@ -15,9 +15,7 @@
 		goto(`${userProfile.uid}/settings`);
 	};
 
-	function onFollow() {
-		
-	}
+	function onFollow() {}
 
 	async function onMessage() {
 		const conversationId = await getOrCreateConversationIdByUserID(userProfile.uid);
@@ -45,3 +43,4 @@
 <a href="/followers" on:click|preventDefault={goToFollowing}
 	>Followers {userProfile.followingCount}</a
 >
+<slot />
