@@ -9,6 +9,7 @@
 	import { SWEETS_SUBCOLLECTION, SweetType, type SweetDetail } from '$lib/types/types';
 	import { get } from 'svelte/store';
 	import Post from './post.svelte';
+	import { invalidateAll } from '$app/navigation';
 
 	export let sweetDetail: SweetDetail;
 	const userProfileData = get(userProfileStore);
@@ -35,6 +36,8 @@
 		} catch {
 			sweetDetail.isReSweeted = previousComment;
 		}
+
+		invalidateAll();
 	}
 
 	function onReSweet() {

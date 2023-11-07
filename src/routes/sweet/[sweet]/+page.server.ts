@@ -7,7 +7,7 @@ export const load = async ({ params, cookies }) => {
 	const uid = cookies.get('uid');
 	if (!uid) throw error(401, 'User not authenticated');
 
-	const [sweetDetail, comments] = await Promise.all([
+	let [sweetDetail, comments] = await Promise.all([
 		getSweetDetail(params.sweet),
 		getAllSweetDetail({
 			sweetType: SweetType.COMMENT,
@@ -15,8 +15,9 @@ export const load = async ({ params, cookies }) => {
 		})
 	]);
 
+	const sweetDetailList = await checkUserInteractions([sweetDetail], uid);
+	sweetDetail = sweetDetailList[0];
 	sweetDetail.comments = await checkUserInteractions(comments, uid);
-	Object.assign(sweetDetail, await checkUserInteractions([sweetDetail], uid));
 
 	return { sweetDetail };
 };

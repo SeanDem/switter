@@ -1,6 +1,5 @@
-import type { Sweet } from '$lib/types/types';
-import { doc, updateDoc, increment } from 'firebase/firestore';
-import { isUserAuth, handleFirestoreError } from '../utils';
+import { doc, increment, updateDoc } from 'firebase/firestore';
+import { handleFirestoreError, isUserAuth } from '../utils';
 import { sweetsCollection } from './collection';
 
 export async function incrementSweetProperty(

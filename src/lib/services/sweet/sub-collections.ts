@@ -1,21 +1,19 @@
+import { db } from '$lib/services/firebase';
+import { SWEETS_SUBCOLLECTION, type SweetDetail } from '$lib/types/types';
 import {
+	addDoc,
 	collection,
 	deleteDoc,
 	doc,
-	type CollectionReference,
-	type DocumentData,
 	getDocs,
 	query,
 	where,
-	getDoc,
-	addDoc
+	type CollectionReference,
+	type DocumentData
 } from 'firebase/firestore';
-import { db } from '$lib/services/firebase';
-import { sweetsCollection } from './collection';
 import { handleFirestoreError } from '../utils';
-import { SWEETS_SUBCOLLECTION, type Sweet, type SweetDetail } from '$lib/types/types';
+import { sweetsCollection } from './collection';
 
-export const getSweetDoc = (sweetId: string) => doc(db, 'sweets', sweetId);
 function getSubCollectionRef(
 	sweetId: string,
 	subCollectionName: SWEETS_SUBCOLLECTION
@@ -40,10 +38,6 @@ export async function addToSubCollection(
 	subCollectionName: SWEETS_SUBCOLLECTION,
 	uid: string
   ): Promise<void> {
-	console.log('addToSubCollection');
-	console.log("sweetId " +sweetId);
-	console.log("subCollectionName " +subCollectionName);
-	console.log("uid " +uid);
 
 	return handleFirestoreError(async () => {
 	  const subCollectionRef = getSubCollectionRef(sweetId, subCollectionName);

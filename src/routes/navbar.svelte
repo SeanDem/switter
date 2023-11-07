@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { goto, invalidateAll } from '$app/navigation';
 	import { createSweet } from '$lib/services/sweet/sweet';
 	import { SweetType } from '$lib/types/types';
 	import { get } from 'svelte/store';
@@ -9,6 +9,7 @@
 
 	function onSubmitSweet(event: CustomEvent<any>) {
 		createSweet({ sweetType: SweetType.SWEET }, event.detail.text);
+		invalidateAll();
 	}
 	function gotoProfile() {
 		const userProfileData = get(userProfileStore);
