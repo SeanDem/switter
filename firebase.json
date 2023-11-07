@@ -1,10 +1,4 @@
 {
-  "functions": {
-    "source": "functions"
-  },
-  "storage": {
-    "rules": "storage.rules"
-  },
   "hosting": {
     "source": ".",
     "ignore": [
