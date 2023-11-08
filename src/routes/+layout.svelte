@@ -17,6 +17,7 @@
 	if (typeof window !== 'undefined') {
 		onAuthStateChanged(auth, async (authUser: FirebaseUser | null) => {
 			document.cookie = `uid = ${authUser?.uid}`;
+			console.log('authUser', authUser);
 			userAuthStore.set(authUser);
 			if (authUser) {
 				userProfileCompleted = await checkAndSetUserProfile(authUser);
