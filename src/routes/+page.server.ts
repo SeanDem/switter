@@ -12,3 +12,5 @@ export const load = async ({ cookies }) => {
 
 	return { sweetDetailList };
 };
+
+export const ssr = false;
