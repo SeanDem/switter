@@ -12,7 +12,7 @@
 	import { page } from '$app/stores';
 	import { beforeNavigate } from '$app/navigation';
 
-	let userProfileCompleted = false;
+	$: userProfileCompleted = false;
 	let loading = true;
 	if (typeof window !== 'undefined') {
 		onAuthStateChanged(auth, async (authUser: FirebaseUser | null) => {

@@ -1,6 +1,6 @@
-import { getFollowers } from "$lib/services/follow/followService.js";
+import { getFollowers } from '$lib/services/userProfile/userProfileService.js';
 
 export const load = async ({ params }) => {
-    const followersList = await getFollowers(params.profile);
-    return { followersList };
+	const followersList = await getFollowers(params.profile);
+	return { followersList };
 };

@@ -2,7 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import SweetCard from '$lib/components/sweet-card.svelte';
-	import { addFollowerAndFollowing } from '$lib/services/follow/followService';
+	import { addFollowerAndFollowing } from '$lib/services/userProfile/userProfileService';
 	import { getOrCreateConversationIdByUserID } from '$lib/services/messages';
 	import type { SweetDetail, UserProf } from '$lib/types/types';
 

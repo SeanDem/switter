@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
+	import { follow } from '$lib/services/userProfile/userProfileService';
 	import type { UserProf } from '$lib/types/types';
 	export let user: UserProf;
 
@@ -11,7 +12,9 @@
 	}
 
 	const onFollow = () => {
-		console.log('Follow button clicked for user:', user.uid);
+		console.log('follow button');
+		if (!$page.route.id) return;
+		follow($page.route.id, user.uid);
 	};
 
 	function message() {
@@ -24,5 +27,5 @@
 	<div>{user.displayName ?? ''}</div>
 	<div>@{user.handle ?? ''}</div>
 	<div>{user.bio ?? ''}</div>
-	<button on:click|stopPropagation={onFollow}>Follow</button>
+	<button on:click={onFollow}>Follow</button>
 </div>

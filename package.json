@@ -47,15 +47,14 @@
 	},
 	"lint-staged": {
 		"*.svelte": [
-		  "eslint --fix",
-		  "prettier --write",
-		  "git add"
+			"eslint --fix",
+			"prettier --write",
+			"git add"
 		],
 		"*.{js,ts}": [
-		  "eslint --fix",
-		  "prettier --write",
-		  "git add"
+			"eslint --fix",
+			"prettier --write",
+			"git add"
 		]
-	  }
-	  
+	}
 }

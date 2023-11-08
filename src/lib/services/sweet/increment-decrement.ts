@@ -7,7 +7,6 @@ export async function incrementSweetProperty(
 	property: 'likesCount' | 'retweetsCount' | 'commentsCount'
 ): Promise<void> {
 	return handleFirestoreError(async () => {
-		isUserAuth();
 		const tweetDoc = doc(sweetsCollection, tweetId);
 		await updateDoc(tweetDoc, { [property]: increment(1) });
 	});
@@ -18,7 +17,6 @@ export async function decrementSweetProperty(
 	property: 'likesCount' | 'retweetsCount' | 'commentsCount'
 ): Promise<void> {
 	return handleFirestoreError(async () => {
-		isUserAuth();
 		const tweetDoc = doc(sweetsCollection, tweetId);
 		await updateDoc(tweetDoc, { [property]: increment(-1) });
 	});
