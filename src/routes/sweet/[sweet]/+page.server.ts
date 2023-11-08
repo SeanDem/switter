@@ -21,3 +21,4 @@ export const load = async ({ params, cookies }) => {
 
 	return { sweetDetail };
 };
+export const ssr = false;
