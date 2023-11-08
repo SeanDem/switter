@@ -16,10 +16,6 @@
 		if (!$page.route.id) return;
 		follow($page.route.id, user.uid);
 	};
-
-	function message() {
-		console.log('message button');
-	}
 </script>
 
 <div role="button" tabindex="0" on:click={onCardClick} on:keydown={() => {}}>
